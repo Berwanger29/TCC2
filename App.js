@@ -1,10 +1,12 @@
 //managed workflow
-import { FirstLogin } from './src/screens/FirstLogin';
+import { NavContainer } from './src/navigation/NavContainer';
 
 
 export default function App() {
   return (
-    <FirstLogin />
+    <>
+      <NavContainer />
+    </>
   );
 }
 

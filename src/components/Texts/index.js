@@ -1,10 +1,26 @@
-import { TextTitleStyles } from "./styles";
+import {
+    TextButtonStyles,
+    TextTitleStyles,
+} from "./styles";
 
 
-export function TextTitle({ text }) {
+export function TextTitle({ text, styles = {} }) {
     return (
-        <TextTitleStyles>
+        <TextTitleStyles
+            style={styles}
+        >
             {text}
         </TextTitleStyles>
+    )
+}
+
+
+export function TextButton({ text, styles }) {
+    return (
+        <TextButtonStyles
+            style={styles}
+        >
+            {text}
+        </TextButtonStyles>
     )
 }
