@@ -29,8 +29,8 @@ export function FirstLogin() {
                 />
             </ArtContainer>
             <TextTitle
-                text={"Bem vindo ao UniTransportes"}
-                styles={{ marginTop: 50, paddingBottom: 100 }}
+                text={`Bem vindo ao ${'\n'} UniTransportes`}
+                styles={{ marginTop: 50, paddingBottom: 100, textAlign:'center' }}
             />
             <DefaultButton
                 onPress={() => navigation.navigate('Home')}

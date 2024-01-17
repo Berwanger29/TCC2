@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import styles from "../../global/styles/styles";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RFPercentage } from "react-native-responsive-fontsize";
 
@@ -9,7 +9,7 @@ export const Container = styled(SafeAreaView)`
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    background-color: ${styles.colors.blue};
+    background-color: ${props => props.theme.colors.blue};
     padding: 0px 0px 20px 0px;
 `
 export const LogoContainer = styled.View`
