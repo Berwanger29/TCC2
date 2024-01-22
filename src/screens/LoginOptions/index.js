@@ -1,10 +1,13 @@
 import {
     ButtonsWrapper,
     Container,
-    DefaultButtonWrapper,
+    LoginShortButtonsWrapper,
+    Logo,
+    LogoContainer,
 } from "./styles";
 
 import {
+    TextButton,
     TextSmall,
     TextTitle
 } from "../../components/Texts";
@@ -14,22 +17,50 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { LoginButton } from "../../components/LoginButton";
 import { EmailTextWrapper } from "../../components/LoginButton/styles";
 import { InvisibleButton } from "../../components/InvisibleButton";
+import { DefaultButton } from "../../components/DefaultButton"
 
 import theme from "../../globals/styles/theme";
 import { Alert } from "react-native";
 
 export function LoginOptions() {
-
-
-
     return (
         <Container>
-            <TextTitle
-                text={'Página de login'}
-            />
+            <LogoContainer>
+                <Logo
+                    source={require('../../assets/images/UniTransportes.png')}
+                />
+            </LogoContainer>
 
             <ButtonsWrapper>
-                <DefaultButtonWrapper>
+
+                <DefaultButton
+                    style={{ marginBottom: 10 }}
+                >
+                    <TextButton
+                        text={'Entrar'}
+                    />
+                </DefaultButton>
+
+                <DefaultButton
+                    inverted={true}
+                >
+                    <TextButton
+                        text={'Cadastrar-se'}
+                    />
+                </DefaultButton>
+
+
+
+            </ButtonsWrapper>
+
+
+
+            <ButtonsWrapper
+                style={{
+                    marginTop: 30
+                }}
+            >
+                <LoginShortButtonsWrapper>
                     <LoginButton
                         style={{ marginRight: 30 }}
                     >
@@ -38,7 +69,7 @@ export function LoginOptions() {
                     <LoginButton>
                         <AntDesign name="google" size={RFValue(30)} color={theme.colors.white} />
                     </LoginButton>
-                </DefaultButtonWrapper>
+                </LoginShortButtonsWrapper>
 
                 <EmailTextWrapper>
                     <TextSmall
@@ -47,7 +78,7 @@ export function LoginOptions() {
                     <InvisibleButton
                         style={{
                             borderBottom: 1,
-                            borderBottomColor: theme.colors.white,
+                            borderBottomColor: theme.colors.yellow,
                             borderBottomWidth: 1
                         }}
                         onPress={() => {
@@ -56,6 +87,9 @@ export function LoginOptions() {
                     >
                         <TextSmall
                             text={'aqui'}
+                            style={{
+                                color: theme.colors.yellow
+                            }}
                         />
                     </InvisibleButton>
                 </EmailTextWrapper>

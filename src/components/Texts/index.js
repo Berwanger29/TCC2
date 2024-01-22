@@ -16,10 +16,13 @@ export function TextTitle({ text, styles = {} }) {
 }
 
 export function TextSmall({
-    text
+    text,
+    style
 }) {
     return (
-        <TextRegularLight>
+        <TextRegularLight
+            style={style}
+        >
             {text}
         </TextRegularLight>
     )
