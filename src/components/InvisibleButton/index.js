@@ -1,12 +1,14 @@
 import { Container } from "./styles";
 
 
-export function DefaultButton({
-    onPress,
+export function InvisibleButton({
     children,
+    style,
+    onPress
 }) {
     return (
         <Container
+            style={style}
             onPress={onPress}
         >
             {children}

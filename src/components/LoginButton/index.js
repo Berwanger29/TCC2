@@ -1,13 +1,15 @@
-import { Container } from "./styles";
+import {
+    Container,
+} from "./styles";
 
 
-export function DefaultButton({
-    onPress,
+export function LoginButton({
     children,
+    style
 }) {
     return (
         <Container
-            onPress={onPress}
+            style={style}
         >
             {children}
         </Container>

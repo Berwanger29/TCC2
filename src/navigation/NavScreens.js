@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { FirstLogin } from "../screens/FirstLogin";
 import { Home } from "../screens/Home";
+import { LoginOptions } from "../screens/LoginOptions";
 
 const Stack = createNativeStackNavigator()
 
@@ -17,6 +18,11 @@ export function NavScreens() {
             <Stack.Screen
                 name="FirstLogin"
                 component={FirstLogin}
+            />
+
+            <Stack.Screen
+                name="LoginOptions"
+                component={LoginOptions}
             />
             <Stack.Screen
                 name="Home"
