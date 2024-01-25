@@ -5,10 +5,9 @@ const logoValues = 60;
 
 export const Container = styled(SafeAreaView)`
     flex: 1;
-    background-color: ${(props) => props.theme.colors.blue};
     align-items: center;
     justify-content: space-between;
-    padding: 25px 15px;
+    padding: ${({ theme }) => theme.measures.paddingScreenVertical}px ${({ theme }) => theme.measures.paddingScreenHorizontal}px;
 `
 
 export const LogoContainer = styled.View`

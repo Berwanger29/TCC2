@@ -9,7 +9,6 @@ import {
 import {
     TextButton,
     TextSmall,
-    TextTitle
 } from "../../components/Texts";
 
 import { AntDesign } from '@expo/vector-icons';
@@ -21,8 +20,12 @@ import { DefaultButton } from "../../components/DefaultButton"
 
 import theme from "../../globals/styles/theme";
 import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export function LoginOptions() {
+
+    const navigation = useNavigation();
+
     return (
         <Container>
             <LogoContainer>
@@ -35,6 +38,7 @@ export function LoginOptions() {
 
                 <DefaultButton
                     style={{ marginBottom: 10 }}
+                    onPress={() => navigation.navigate('Home')}
                 >
                     <TextButton
                         text={'Entrar'}
@@ -43,6 +47,7 @@ export function LoginOptions() {
 
                 <DefaultButton
                     inverted={true}
+                    onPress={()=> navigation.navigate('CreateAccountWithEmail')}
                 >
                     <TextButton
                         text={'Cadastrar-se'}
@@ -61,11 +66,11 @@ export function LoginOptions() {
                 }}
             >
                 <LoginShortButtonsWrapper>
-                    <LoginButton
+                    {/* <LoginButton
                         style={{ marginRight: 30 }}
                     >
                         <AntDesign name="apple1" size={RFValue(30)} color={theme.colors.white} />
-                    </LoginButton>
+                    </LoginButton> */}
                     <LoginButton>
                         <AntDesign name="google" size={RFValue(30)} color={theme.colors.white} />
                     </LoginButton>

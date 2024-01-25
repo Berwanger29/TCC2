@@ -13,8 +13,7 @@ export const Container = styled(SafeAreaView)`
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    background-color: ${props => props.theme.colors.blue};
-    padding: 20px;
+    padding: ${({ theme }) => theme.measures.paddingScreenVertical}px ${({ theme }) => theme.measures.paddingScreenHorizontal}px;
 `
 
 

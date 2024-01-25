@@ -46,7 +46,7 @@ export function FirstLogin() {
                 />
             </ArtContainer>
             <TextTitle
-                text={`Bem vindo ao ${'\n'} UniTransportes`}
+                text={`Bem vindo ao${'\n'}UniTransportes`}
                 styles={{ marginTop: 50, paddingBottom: 100, textAlign: 'center' }}
             />
             <DefaultButton
