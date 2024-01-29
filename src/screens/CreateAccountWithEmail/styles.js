@@ -20,4 +20,5 @@ export const KeyboardView = styled(KeyboardAwareScrollView).attrs({
 
 export const InputWrapper = styled.View`
     flex: 1;
+
 `

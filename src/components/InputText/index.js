@@ -1,26 +1,50 @@
-import { useEffect } from "react"
+import { useState } from "react"
 import {
     Container,
+    EyeIcon,
+    Input,
+    TogglePasswordButton,
 } from "./styles"
-
 
 export function InputText({
     onChangeText,
     placeholder,
     value,
-    style
+    style,
+    isPassword = false
 }) {
 
-    // useEffect(() => {
-    //     console.log(onChangeText)
-    // }, [])
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+
+    function ToggleSeePasswrod() {
+        setIsPasswordVisible(!isPasswordVisible)
+    }
 
     return (
         <Container
-            onChangeText={() => { }}
-            placeholder={placeholder}
-            style={style}
         >
+            <Input
+                onChangeText={onChangeText}
+                placeholder={placeholder}
+                value={value}
+                isPassword={isPassword}
+                style={style}
+                secureTextEntry={isPasswordVisible}
+            />
+
+            {isPassword ?
+                (
+                    <TogglePasswordButton
+                        onPress={ToggleSeePasswrod}
+                    >
+                        <EyeIcon
+                            name={isPasswordVisible ? "eye" : "eye-with-line"}
+                        />
+                    </TogglePasswordButton>
+                )
+                :
+                (<></>)
+            }
 
         </Container>
     )

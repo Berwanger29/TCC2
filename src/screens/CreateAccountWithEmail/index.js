@@ -13,6 +13,8 @@ import {
     TextH2,
     TextTitle
 } from "../../components/Texts";
+import { useState } from "react";
+import { Alert } from "react-native";
 
 function handleTextInput(e) {
     console.log(e)
@@ -20,6 +22,33 @@ function handleTextInput(e) {
 
 
 export function CreateAccountWithEmail() {
+
+    const [email, setEmail] = useState('');
+    const [verifyEmail, setVerifyEmail] = useState('');
+    const [passowrd, setPassword] = useState('');
+    const [verifyPassword, setVerifyPassowrd] = useState('');
+
+    function Login() {
+        if (email !== verifyEmail) {
+            Alert.alert(
+                "Erro",
+                "Os e-mails não coincidem"
+            )
+            return
+        }
+
+        if (passowrd !== verifyPassword) {
+            Alert.alert(
+                "Erro",
+                "As senhas não coincidem"
+            )
+
+            return
+        }
+
+        
+    }
+
     return (
         <Container>
             <KeyboardView>
@@ -39,12 +68,9 @@ export function CreateAccountWithEmail() {
                         }}
                     />
                     <InputText
-                        onChangeText={'ola'}
-                        
+                        onChangeText={(e) => { setEmail(e) }}
+                        value={email}
                         placeholder={"e-mail"}
-                        style={{
-                            marginBottom: 15
-                        }}
                     />
 
                     <TextH2
@@ -54,44 +80,42 @@ export function CreateAccountWithEmail() {
                         }}
                     />
                     <InputText
-                        onChangeText={'ola'}
-                        placeholder={"reescreva seu e-mail"}
-                        style={{
-                            marginBottom: 15
+                        onChangeText={(e) => {
+                            setVerifyEmail(e)
+                            return e
                         }}
+                        placeholder={"reescreva seu e-mail"}
+
                     />
                     <TextH2
                         text="Digite sua senha"
-                        style={{
-                            marginBottom: 5
-                        }}
                     />
                     <InputText
-                        onChangeText={'ola'}
-                        placeholder={"senha"}
-                        style={{
-                            marginBottom: 15
+                        onChangeText={(e) => {
+                            setPassword(e)
+                            return e
                         }}
+                        isPassword={true}
+                        placeholder={"senha"}
+
                     />
                     <TextH2
                         text="Confirme sua senha"
-                        style={{
-                            marginBottom: 5
-                        }}
                     />
                     <InputText
-                        onChangeText={'ola'}
-                        placeholder={"confirme sua senha"}
-                        style={{
-                            marginBottom: 15
+                        onChangeText={(e) => {
+                            setVerifyPassowrd(e)
+                            return e
                         }}
+                        isPassword={true}
+                        placeholder={"confirme sua senha"}
                     />
 
                 </InputWrapper>
             </KeyboardView>
             <DefaultButton
                 inverted={true}
-                onPress={() => { }}
+                onPress={() => Login()}
             >
                 <TextButton
                     text={"Criar conta"}
