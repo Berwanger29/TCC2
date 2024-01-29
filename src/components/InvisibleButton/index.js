@@ -1,17 +1,15 @@
 import { Container } from "./styles";
 
 
-export function DefaultButton({
-    onPress,
+export function InvisibleButton({
     children,
     style,
-    inverted = false
+    onPress
 }) {
     return (
         <Container
-            onPress={onPress}
             style={style}
-            inverted={inverted}
+            onPress={onPress}
         >
             {children}
         </Container>

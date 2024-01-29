@@ -36,9 +36,9 @@ export default function App() {
 
   return (
     <>
-    <ThemeProvider theme={theme}>
-      <NavContainer />
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <NavContainer />
+      </ThemeProvider>
     </>
   );
 }
