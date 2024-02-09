@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Alert } from "react-native";
 import {
     Container,
     InputWrapper,
@@ -13,8 +15,8 @@ import {
     TextH2,
     TextTitle
 } from "../../components/Texts";
-import { useState } from "react";
-import { Alert } from "react-native";
+
+import { CreateAccountWithEmailController } from "../../controllers/CreateAccountController";
 
 function handleTextInput(e) {
     console.log(e)
@@ -46,6 +48,8 @@ export function CreateAccountWithEmail() {
             return
         }
 
+        const newUser = new CreateAccountWithEmailController()
+        newUser.HandleNewEmailUser()
         
     }
 
