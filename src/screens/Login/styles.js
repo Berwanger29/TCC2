@@ -5,3 +5,7 @@ export const Container = styled(SafeAreaView)`
     flex: 1;
     padding: ${({ theme }) => theme.measures.paddingScreenVertical}px ${({ theme }) => theme.measures.paddingScreenHorizontal}px;
 `
+
+export const InputWrapper = styled.View`
+    flex: 1;
+`

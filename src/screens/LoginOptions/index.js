@@ -38,7 +38,7 @@ export function LoginOptions() {
 
                 <DefaultButton
                     style={{ marginBottom: 10 }}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('Login')}
                 >
                     <TextButton
                         text={'Entrar'}
@@ -47,7 +47,7 @@ export function LoginOptions() {
 
                 <DefaultButton
                     inverted={true}
-                    onPress={()=> navigation.navigate('CreateAccountWithEmail')}
+                    onPress={() => navigation.navigate('CreateAccountWithEmail')}
                 >
                     <TextButton
                         text={'Cadastrar-se'}

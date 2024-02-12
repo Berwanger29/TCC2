@@ -1,13 +1,11 @@
-import { UserEmail } from "../screens/CreateAccountWithEmail/model";
-
+import { CreateAccountUser } from "../models/CreateUserModel"
 
 //se conecta com a View
 export class CreateAccountWithEmailController {
-    constructor() {}
+    constructor() { }
 
     HandleNewEmailUser() {
-        const newEmailUser = new UserEmail()
-        newEmailUser.handleCreateAccountWithEmailAndPassword("email@teste.com", "123123")
+        const newEmailUser = new CreateAccountUser()
+        newEmailUser.emailAndPassowrd()
     }
-
 }

@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { KeyboardAvoidingView, Platform } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
@@ -20,5 +19,4 @@ export const KeyboardView = styled(KeyboardAwareScrollView).attrs({
 
 export const InputWrapper = styled.View`
     flex: 1;
-
 `

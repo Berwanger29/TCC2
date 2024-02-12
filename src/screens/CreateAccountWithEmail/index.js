@@ -30,7 +30,7 @@ export function CreateAccountWithEmail() {
     const [passowrd, setPassword] = useState('');
     const [verifyPassword, setVerifyPassowrd] = useState('');
 
-    function Login() {
+    function CreateUser() {
         if (email !== verifyEmail) {
             Alert.alert(
                 "Erro",
@@ -50,7 +50,6 @@ export function CreateAccountWithEmail() {
 
         const newUser = new CreateAccountWithEmailController()
         newUser.HandleNewEmailUser()
-        
     }
 
     return (
@@ -119,7 +118,7 @@ export function CreateAccountWithEmail() {
             </KeyboardView>
             <DefaultButton
                 inverted={true}
-                onPress={() => Login()}
+                onPress={() => CreateUser()}
             >
                 <TextButton
                     text={"Criar conta"}
