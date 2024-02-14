@@ -1,3 +1,4 @@
+import { useContext } from "react"
 import {
     Container,
     InputWrapper
@@ -13,19 +14,26 @@ import { DefaultButton } from "../../components/DefaultButton"
 
 import { useNavigation } from "@react-navigation/native"
 import { Alert } from "react-native"
+import { UserContext } from "../../../App"
 
 export function Login() {
 
     const navigation = useNavigation()
-
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    
+    const { setUserDataContext } = useContext(UserContext)
+    
+    const [email, setEmail] = useState("email@teste.com")
+    const [password, setPassword] = useState("123123")
 
     async function loginEmailAndPassword() {
-        const newLogin = new LoginUserController()
-        const response = await newLogin.HandleLoginUserEmailAndPassword(email, password)
 
-        response ? navigation.navigate("Home") : Alert.alert("Azedou", "Alguma coisa de errada não está certa")
+
+        const newLogin = new LoginUserController()
+        const { isLoginSuccessful, userData } = await newLogin.HandleLoginUserEmailAndPassword(email, password)
+
+        setUserDataContext(userData)
+
+        isLoginSuccessful ? navigation.navigate("Home") : Alert.alert("Azedou", "Alguma coisa de errada não está certa")
     }
 
     return (

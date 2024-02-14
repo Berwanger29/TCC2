@@ -7,14 +7,14 @@ export class LoginUser {
     async LoginUserWithEmailAndPassword(email, password) {
 
         let isLoginSuccessful;
+        let userData;
 
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                // console.log(user.email)
 
                 isLoginSuccessful = true
-                return
+                userData = user;
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -23,7 +23,9 @@ export class LoginUser {
                 isLoginSuccessful = false
                 return
             });
-        return isLoginSuccessful
+        return {
+            isLoginSuccessful,
+            userData
+        }
     }
-
 }
