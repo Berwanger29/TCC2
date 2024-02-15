@@ -1,5 +1,5 @@
 //managed workflow
-import { createContext, useState, useContext } from "react";
+import {  useState } from "react";
 import { NavContainer } from './src/navigation/NavContainer';
 
 
@@ -22,8 +22,7 @@ import { StatusBar } from 'expo-status-bar';
 
 import theme from './src/globals/styles/theme';
 
-
-export const UserContext = createContext("");
+import { UserContext } from "./src/context/UserContext";
 
 
 export default function App() {

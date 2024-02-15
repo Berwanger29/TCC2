@@ -1,9 +1,12 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import { Container } from "./styles";
 
 import { TextSmall, TextTitle } from "../../components/Texts";
-import { UserContext } from "../../../App";
+import { UserContext } from "../../context/UserContext";
+
+import { format as pretty } from "pretty-format";
+import { DefaultButton } from "../../components/DefaultButton";
 
 
 
@@ -18,8 +21,10 @@ export function Home() {
                 text={'Home'}
             />
             <TextSmall
-                text={userDataContext.email.length > 0 ? userDataContext.email : "nada ainda"}
+                text={userDataContext.email  ? userDataContext.email : ""}
             />
+
+    
         </Container>
     )
 }

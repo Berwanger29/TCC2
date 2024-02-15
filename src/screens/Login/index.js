@@ -14,26 +14,28 @@ import { DefaultButton } from "../../components/DefaultButton"
 
 import { useNavigation } from "@react-navigation/native"
 import { Alert } from "react-native"
-import { UserContext } from "../../../App"
+import { UserContext } from "../../context/UserContext"
 
 export function Login() {
 
     const navigation = useNavigation()
-    
+
     const { setUserDataContext } = useContext(UserContext)
-    
+
     const [email, setEmail] = useState("email@teste.com")
     const [password, setPassword] = useState("123123")
+    const [userDataContextHelper, setUserDataContextHelper] = useState("")
 
     async function loginEmailAndPassword() {
 
 
         const newLogin = new LoginUserController()
         const { isLoginSuccessful, userData } = await newLogin.HandleLoginUserEmailAndPassword(email, password)
-
         setUserDataContext(userData)
+        
 
-        isLoginSuccessful ? navigation.navigate("Home") : Alert.alert("Azedou", "Alguma coisa de errada não está certa")
+        isLoginSuccessful ? navigation.navigate("Home") : Alert.alert("Erro", "Alguma coisa deu errado")
+        return userData
     }
 
     return (
@@ -75,7 +77,10 @@ export function Login() {
             </InputWrapper>
 
             <DefaultButton
-                onPress={() => loginEmailAndPassword()}
+                onPress={() =>{
+                    const res =  loginEmailAndPassword()
+                    setUserDataContext(res)
+                }}
             >
                 <TextButton
                     text="Entrar"
