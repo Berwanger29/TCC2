@@ -8,14 +8,16 @@ import { UserContext } from "../../context/UserContext";
 
 
 
-export function Home() {
+
+
+export function Profile() {
 
     const { userDataContext } = useContext(UserContext)
 
     return (
         <Container>
             <TextTitle
-                text={'Home'}
+                text={'Profile'}
             />
             <TextSmall
                 text={userDataContext.email}

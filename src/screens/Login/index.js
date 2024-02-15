@@ -34,7 +34,7 @@ export function Login() {
         setUserDataContext(userData)
         
 
-        isLoginSuccessful ? navigation.navigate("Home") : Alert.alert("Erro", "Alguma coisa deu errado")
+        isLoginSuccessful ? navigation.navigate("NavBottomTabs") : Alert.alert("Erro", "Alguma coisa deu errado")
         return userData
     }
 
