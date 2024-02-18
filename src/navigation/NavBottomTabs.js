@@ -19,6 +19,7 @@ export function NavBottomTabs() {
         <Tab.Navigator
             initialRouteName='Home'
             screenOptions={{
+
                 headerShown: false,
                 animation: "slide_from_right",
                 tabBarShowLabel: false,

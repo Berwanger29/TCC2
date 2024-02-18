@@ -17,7 +17,6 @@ export function InputText({
     const [isPasswordVisible, setIsPasswordVisible] = useState(true)
 
     function ToggleSeePasswrod() {
-        console.log(isPasswordVisible)
         setIsPasswordVisible(!isPasswordVisible)
     }
 

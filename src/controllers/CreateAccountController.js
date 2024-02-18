@@ -2,10 +2,20 @@ import { CreateAccountUser } from "../models/CreateUserModel"
 
 //se conecta com a View
 export class CreateAccountWithEmailController {
-    constructor() { }
+    constructor(
+        name,
+        email,
+        password
+    ) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
-    HandleNewEmailUser() {
-        const newEmailUser = new CreateAccountUser()
-        newEmailUser.emailAndPassowrd()
+    async HandleNewEmailUser() {
+        const newEmailUser = new CreateAccountUser(this.name, this.email, this.password)
+        const { isLoginSuccessful, userData } = await newEmailUser.emailAndPassowrd()
+        
+        return { isLoginSuccessful, userData }
     }
 }

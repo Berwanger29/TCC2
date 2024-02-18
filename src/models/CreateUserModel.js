@@ -1,24 +1,52 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
 export class CreateAccountUser {
     constructor(
-        email = "",
-        password = ""
+        name,
+        email,
+        password
     ) {
+        this.name = name
         this.email = email;
         this.passowrd = password;
-
     }
+
     async emailAndPassowrd() {
-        await createUserWithEmailAndPassword(auth, "email@teste.com", "123123")
+
+        let isLoginSuccessful;
+        let userData;
+
+        await createUserWithEmailAndPassword(auth, this.email, this.passowrd)
             .then((userCredentials) => {
-                const user = userCredentials.user
-                console.log(user)
+                userData = userCredentials.user
+                isLoginSuccessful = true;
+
+                this.newDocDB(userData.uid)
+                return
             })
             .catch((err) => {
                 console.error(err)
             })
+
+        return {
+            isLoginSuccessful,
+            userData
+        }
+    }
+
+    async newDocDB(userUID) {
+        try {
+            await setDoc(doc(db, "passengers", userUID), {
+                uid: userUID,
+                name: this.name,
+                email: this.email
+            })
+            return
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
     }
 
 }

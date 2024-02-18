@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const logoValues = 60;
+const logoValues = 400;
 
 export const Container = styled(SafeAreaView)`
     flex: 1;
@@ -11,16 +11,15 @@ export const Container = styled(SafeAreaView)`
 `
 
 export const LogoContainer = styled.View`
-    width: ${logoValues}%;
-    height: ${logoValues}%;
+    width: ${logoValues}px;
+    height: ${logoValues}px;
 `
 
 export const Logo = styled.Image.attrs({
     resizeMode: "cover"
 })`
     width: 100%;
-    height: 100%;
-    
+    height: 100%; 
 `
 
 export const LoginShortButtonsWrapper = styled.View`
@@ -34,4 +33,5 @@ export const LoginShortButtonsWrapper = styled.View`
 export const ButtonsWrapper = styled.View`
     align-items: center;
     width: 100%;
+    flex: 1;
 `

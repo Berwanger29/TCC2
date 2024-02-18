@@ -24,7 +24,6 @@ export function Login() {
 
     const [email, setEmail] = useState("email@teste.com")
     const [password, setPassword] = useState("123123")
-    const [userDataContextHelper, setUserDataContextHelper] = useState("")
 
     async function loginEmailAndPassword() {
 
@@ -32,10 +31,10 @@ export function Login() {
         const newLogin = new LoginUserController()
         const { isLoginSuccessful, userData } = await newLogin.HandleLoginUserEmailAndPassword(email, password)
         setUserDataContext(userData)
-        
+
 
         isLoginSuccessful ? navigation.navigate("NavBottomTabs") : Alert.alert("Erro", "Alguma coisa deu errado")
-        return userData
+        // return userData
     }
 
     return (
@@ -77,10 +76,7 @@ export function Login() {
             </InputWrapper>
 
             <DefaultButton
-                onPress={() =>{
-                    const res =  loginEmailAndPassword()
-                    setUserDataContext(res)
-                }}
+                onPress={() => loginEmailAndPassword()}
             >
                 <TextButton
                     text="Entrar"
