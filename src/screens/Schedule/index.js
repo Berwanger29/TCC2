@@ -17,11 +17,12 @@ import {
 import {
     DefaultButton
 } from "../../components/DefaultButton";
+import { GenericHeader } from "../../components/GenericHeader";
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import theme from "../../globals/styles/theme"
-import { GenericHeader } from "../../components/GenericHeader";
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -29,6 +30,7 @@ import { GenericHeader } from "../../components/GenericHeader";
 
 export function Schedule() {
 
+    const navigation = useNavigation()
     const date = new Date()
 
     // const [yesterday, setYesterday] = useState(new Date())
@@ -141,10 +143,10 @@ export function Schedule() {
 
 
             <DefaultButton
-                inverted={true}
+                onPress={() => navigation.navigate("Confirmation")}
             >
                 <TextButton
-                    text="Agendar"
+                    text="Confirmar"
                 />
             </DefaultButton>
         </Container>

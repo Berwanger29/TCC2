@@ -5,7 +5,7 @@ import theme from "../globals/styles/theme";
 
 import { Home } from "../screens/Home";
 import { Schedule } from "../screens/Schedule";
-
+import { Confirmation } from "../screens/Confirmation";
 
 const Stack = createNativeStackNavigator()
 
@@ -29,6 +29,10 @@ export function NavSchedule() {
                 <Stack.Screen
                     name="Schedule"
                     component={Schedule}
+                />
+                <Stack.Screen
+                    name="Confirmation"
+                    component={Confirmation}
                 />
             </>
         </Stack.Navigator>
