@@ -7,3 +7,17 @@ export const Container = styled(SafeAreaView)`
     background-color: ${({ theme }) => theme.colors.blue};
     justify-content: space-between;
 `
+
+export const InputsContainer = styled.View`
+    flex: 1;
+`
+
+export const InputWrapper = styled.View`
+    align-items: center;
+`
+export const InvisibleButton = styled.TouchableOpacity`
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-bottom: 1px solid ${({theme})=> theme.colors.yellow};
+`
