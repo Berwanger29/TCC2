@@ -23,6 +23,8 @@ import { StatusBar } from 'expo-status-bar';
 import theme from './src/globals/styles/theme';
 
 import { UserContext } from "./src/context/UserContext";
+import { Home } from "./src/screens/Home";
+import { NavSchedule } from "./src/navigation/NavSchedule";
 
 
 export default function App() {

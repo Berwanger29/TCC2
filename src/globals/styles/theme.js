@@ -22,6 +22,7 @@ export default {
         fontTitle: 28,
         fontH1: 28,
         fontH2: 25,
+        fontRegular: 18,
         fontRegularLight: 14,
         fontTextInput: 18,
         fontDefaultButton: 18,

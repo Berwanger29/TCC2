@@ -7,6 +7,7 @@ import { Login } from "../screens/Login";
 
 import theme from "../globals/styles/theme";
 import { NavBottomTabs } from "./NavBottomTabs";
+import { NavSchedule } from "./NavSchedule";
 
 
 const Stack = createNativeStackNavigator()
@@ -50,6 +51,7 @@ export function NavScreens() {
                 name="NavBottomTabs"
                 component={NavBottomTabs}
             />
+
         </Stack.Navigator>
     )
 }

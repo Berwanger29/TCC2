@@ -1,15 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import {
-    Heart,
-} from 'phosphor-react-native';
-
 import { Home } from '../screens/Home';
 import { Profile } from '../screens/Profile';
 import { AntDesign } from '@expo/vector-icons';
 
 import theme from '../globals/styles/theme';
 import { Historic } from '../screens/Historic';
+import { NavSchedule } from './NavSchedule';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,9 +14,8 @@ export function NavBottomTabs() {
 
     return (
         <Tab.Navigator
-            initialRouteName='Home'
+            initialRouteName='NavSchedule'
             screenOptions={{
-
                 headerShown: false,
                 animation: "slide_from_right",
                 tabBarShowLabel: false,
@@ -30,8 +26,8 @@ export function NavBottomTabs() {
             }}
         >
             <Tab.Screen
-                name='Home'
-                component={Home}
+                name='NavSchedule'
+                component={NavSchedule}
                 options={{
                     tabBarIcon: ({ focused }) => <AntDesign
                         name="home"
@@ -72,6 +68,7 @@ export function NavBottomTabs() {
                     />
                 }}
             />
+
         </Tab.Navigator >
     )
 }

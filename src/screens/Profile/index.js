@@ -3,11 +3,8 @@ import { useContext } from "react";
 import { Container } from "./styles";
 
 import { TextSmall, TextTitle } from "../../components/Texts";
+
 import { UserContext } from "../../context/UserContext";
-
-
-
-
 
 
 export function Profile() {
