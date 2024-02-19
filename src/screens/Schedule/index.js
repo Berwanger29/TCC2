@@ -21,6 +21,7 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import theme from "../../globals/styles/theme"
+import { GenericHeader } from "../../components/GenericHeader";
 
 
 
@@ -75,12 +76,21 @@ export function Schedule() {
 
     return (
         <Container>
-            <TextTitle
+            {/* <TextTitle
                 text={'Agendar'}
                 styles={{
                     marginBottom: 25,
                     color: theme.colors.yellow
                 }}
+            /> */}
+
+            <GenericHeader
+                text="Agendar"
+                textStyles={{
+                    marginBottom: 25,
+                    color: theme.colors.yellow
+                }}
+                backButton={true}
             />
 
             <InputsContainer>
