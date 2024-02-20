@@ -21,6 +21,6 @@ export const InvisibleButton = styled.TouchableOpacity`
     justify-content: center;
     padding: 10px;
     width: 100%;
-    border: 1px solid ${({ theme }) => theme.colors.yellow};
-    border-radius: 10%;
+    /* border: 1px solid ${({ theme }) => theme.colors.yellow};
+    border-radius: 10%; */
 `

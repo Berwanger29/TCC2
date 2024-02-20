@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
     Container,
@@ -23,6 +23,10 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import theme from "../../globals/styles/theme"
 import { useNavigation } from "@react-navigation/native";
+import { Alert } from "react-native";
+import format from "pretty-format";
+import { ConfirmationController } from "../../controllers/ConfirmationController";
+import { UserContext } from "../../context/UserContext";
 
 
 
@@ -30,15 +34,15 @@ import { useNavigation } from "@react-navigation/native";
 
 export function Schedule() {
 
+    const { userDataContext } = useContext(UserContext)
     const navigation = useNavigation()
-    const date = new Date()
 
     // const [yesterday, setYesterday] = useState(new Date())
 
-    const [selectedDate, setSelectedDate] = useState(date);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [datePickerVisible, setDatePickerVisible] = useState(false);
 
-    const [selectedTime, setSelectedTime] = useState(date);
+    const [selectedTime, setSelectedTime] = useState(new Date());
     const [timePickerVisible, setTimePickerVisible] = useState(false);
 
     // function YesterdayDate() {
@@ -69,8 +73,40 @@ export function Schedule() {
     function handleTimeConfirm(time) {
         setSelectedTime(time);
         hideTimePicker();
-        console.log(`${selectedTime.getHours()}:${selectedTime.getMinutes()}`)
     };
+
+    async function confirm(formatedDate) {
+
+        const newSchedule = new ConfirmationController()
+        const { isAddedHistoricSuccess } = newSchedule.ConfirmationUploadController(userDataContext.uid, formatedDate);
+
+        console.log(isAddedHistoricSuccess)
+    }
+
+    function handleConfirmation() {
+
+        let formatedDate = `${selectedDate.getFullYear()}Y ${selectedDate.getMonth()}M ${selectedDate.getDate()}D ${selectedTime.getHours()}H ${selectedTime.getMinutes()}Min`
+        // let formatedDate = new Date();
+        // let formatedDate = `${selectedDate.getFullYear()}-${selectedDate.getMonth()}-${selectedDate.getDay()}T00:${selectedTime.getHours()}:${selectedTime.getMinutes()}.000Z`
+        console.log(formatedDate)
+        // console.log(selectedTime.getHours())
+
+        Alert.alert(
+            "Confirmação",
+            `Você deseja realmente confirmar sua viagem na data ${selectedDate.toLocaleDateString()} as ${selectedTime.getHours()}:${selectedTime.getMinutes()} ?`,
+            [
+                {
+                    text: "Modificar",
+                    onPress: () => { },
+                    style: "cancel"
+                },
+                {
+                    text: "Confirmar",
+                    onPress: () => confirm(formatedDate)
+                }
+            ]
+        )
+    }
 
     // useEffect(() => {
     //     YesterdayDate()
@@ -78,14 +114,6 @@ export function Schedule() {
 
     return (
         <Container>
-            {/* <TextTitle
-                text={'Agendar'}
-                styles={{
-                    marginBottom: 25,
-                    color: theme.colors.yellow
-                }}
-            /> */}
-
             <GenericHeader
                 text="Agendar"
                 textStyles={{
@@ -100,6 +128,7 @@ export function Schedule() {
                     <TextH2
                         text="Selecione uma data"
                     />
+
                     <InvisibleButton
                         onPress={() => showDatePicker()}
                     >
@@ -107,6 +136,7 @@ export function Schedule() {
                             text={selectedDate ? selectedDate.toLocaleDateString() : 'Data não selecionada'}
                         />
                     </InvisibleButton>
+
                     <DateTimePickerModal
                         date={selectedDate}
                         isVisible={datePickerVisible}
@@ -133,7 +163,8 @@ export function Schedule() {
                         isVisible={timePickerVisible}
                         mode="time"
                         is24Hour
-                        locale="en_GB"
+                        // locale="pt-BR"
+                        minuteInterval={15}
                         onConfirm={handleTimeConfirm}
                         onCancel={hideTimePicker}
                     />
@@ -143,7 +174,8 @@ export function Schedule() {
 
 
             <DefaultButton
-                onPress={() => navigation.navigate("Confirmation")}
+                // onPress={() => navigation.navigate("Confirmation")}
+                onPress={() => handleConfirmation()}
             >
                 <TextButton
                     text="Confirmar"
