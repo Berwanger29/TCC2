@@ -43,6 +43,8 @@ export class CreateAccountUser {
                 name: this.name,
                 email: this.email
             })
+
+            // await addDoc(collection(doc(db, "passengers", userUID), "historic"), )
             return
         } catch (e) {
             console.error("Error adding document: ", e);

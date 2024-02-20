@@ -78,9 +78,12 @@ export function Schedule() {
     async function confirm(formatedDate) {
 
         const newSchedule = new ConfirmationController()
-        const { isAddedHistoricSuccess } = newSchedule.ConfirmationUploadController(userDataContext.uid, formatedDate);
+        const isAddedHistoricSuccess = newSchedule.ConfirmationUploadController(userDataContext.uid, formatedDate);
 
         console.log(isAddedHistoricSuccess)
+        if (isAddedHistoricSuccess) {
+            navigation.navigate("Confirmation")
+        }
     }
 
     function handleConfirmation() {
@@ -89,7 +92,7 @@ export function Schedule() {
         // let formatedDate = new Date();
         // let formatedDate = `${selectedDate.getFullYear()}-${selectedDate.getMonth()}-${selectedDate.getDay()}T00:${selectedTime.getHours()}:${selectedTime.getMinutes()}.000Z`
         console.log(formatedDate)
-        // console.log(selectedTime.getHours())
+
 
         Alert.alert(
             "Confirmação",

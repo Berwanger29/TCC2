@@ -50,6 +50,14 @@ export function CreateAccountWithEmail() {
             return
         }
 
+        if (name === "") {
+            Alert.alert(
+                "Erro",
+                "Digite o seu nome"
+            )
+            return
+        }
+
         const newUser = new CreateAccountWithEmailController(name, email, password)
         const { isLoginSuccessful, userData } = await newUser.HandleNewEmailUser()
         setUserDataContext(userData)

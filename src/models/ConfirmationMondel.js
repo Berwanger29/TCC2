@@ -1,15 +1,19 @@
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
+
+import * as Crypto from 'expo-crypto'
 import format from "pretty-format"
 
 export class ConfirmationModel {
     constructor(
-        uid,
-        dateTime,
+        uid = "",
+        dateTime = "",
         origin = "Novo Airão",
         destiny = "Manaus",
         price = "85",
-        passengers = "2"
+        passengers = "2",
+        status = "agendado",
+        scheduledId = Crypto.randomUUID()
     ) {
         this.uid = uid
         this.dateTime = dateTime
@@ -17,9 +21,13 @@ export class ConfirmationModel {
         this.destiny = destiny
         this.price = price
         this.passengers = passengers
+        this.status = status
+        this.scheduledId = scheduledId
     }
 
     async uploadTravel() {
+
+        // const scheduleId
 
         let isAddedHistoricSuccess = true;
 
@@ -29,7 +37,9 @@ export class ConfirmationModel {
             origin: this.origin,
             destiny: this.destiny,
             price: this.price,
-            passengers: this.passengers
+            passengers: this.passengers,
+            status: this.status,
+            scheduledId: this.scheduledId
         }
 
         try {
@@ -40,7 +50,9 @@ export class ConfirmationModel {
             return isAddedHistoricSuccess;
 
         } catch (e) {
-            isAddedHistoricSuccess = false
+            if (e) {
+                isAddedHistoricSuccess = false
+            }
             console.error(e)
         }
 

@@ -6,9 +6,11 @@ import {
 import {
     AnimationContainer,
     Container,
+    Wrapper,
 } from "./styles";
 import { DefaultButton } from '../../components/DefaultButton';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -18,23 +20,24 @@ export function Confirmation() {
 
     return (
         <Container>
-
-            <AnimationContainer>
-                <LottieView
-                    autoPlay
-                    loop={false}
-                    source={require("../../assets/animations/confirmation.json")}
+            <Wrapper>
+                <AnimationContainer>
+                    <LottieView
+                        autoPlay
+                        loop={false}
+                        source={require("../../assets/animations/confirmation.json")}
+                    />
+                </AnimationContainer>
+                <TextTitle
+                    text="Confirmado"
                 />
-            </AnimationContainer>
-            <TextTitle
-                text="Confirmado"
-            />
+            </Wrapper>
 
             <DefaultButton
                 onPress={() => navigation.navigate("Home")}
                 style={{
-                    position: "absolute",
-                    bottom: 20
+                    // position: "absolute",
+                    // bottom: SafeAreaView
                 }}
             >
                 <TextButton

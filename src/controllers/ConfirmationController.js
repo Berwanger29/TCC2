@@ -13,8 +13,8 @@ export class ConfirmationController {
     ) {
         const newConfirmation = new ConfirmationModel(uid, dateTime, origin, destiny, price);
         const isAddedHistoricSuccess = await newConfirmation.uploadTravel()
-
-        console.log(isAddedHistoricSuccess + " confirmation controller")
+        
+        
         return isAddedHistoricSuccess;
     }
 }
