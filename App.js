@@ -1,5 +1,5 @@
 //managed workflow
-import {  useState } from "react";
+import { useState } from "react";
 import { NavContainer } from './src/navigation/NavContainer';
 
 
@@ -23,11 +23,14 @@ import { StatusBar } from 'expo-status-bar';
 import theme from './src/globals/styles/theme';
 
 import { UserContext } from "./src/context/UserContext";
+import { UserDBContext } from "./src/context/UserDBContext";
 
 
 export default function App() {
 
   const [userDataContext, setUserDataContext] = useState("")
+  const [userDBContext, setUserDBContext] = useState("")
+
 
   let [fontsLoaded, fontError] = useFonts({
     Oswald_700Bold,
@@ -49,13 +52,17 @@ export default function App() {
       <StatusBar
         style='light'
       />
-      <UserContext.Provider
-        value={{ userDataContext, setUserDataContext }}
+      <UserDBContext.Provider
+        value={{ userDBContext, setUserDBContext }}
       >
-        <ThemeProvider theme={theme}>
-          <NavContainer />
-        </ThemeProvider>
-      </UserContext.Provider>
+        <UserContext.Provider
+          value={{ userDataContext, setUserDataContext }}
+        >
+          <ThemeProvider theme={theme}>
+            <NavContainer />
+          </ThemeProvider>
+        </UserContext.Provider>
+      </UserDBContext.Provider>
     </>
   );
 }

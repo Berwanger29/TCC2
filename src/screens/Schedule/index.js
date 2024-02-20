@@ -80,7 +80,6 @@ export function Schedule() {
         const newSchedule = new ConfirmationController()
         const isAddedHistoricSuccess = newSchedule.ConfirmationUploadController(userDataContext.uid, formatedDate);
 
-        console.log(isAddedHistoricSuccess)
         if (isAddedHistoricSuccess) {
             navigation.navigate("Confirmation")
         }

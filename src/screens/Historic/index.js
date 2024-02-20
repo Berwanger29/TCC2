@@ -1,9 +1,11 @@
 import { useContext } from "react";
 
-import { Container } from "./styles";
+import { Container, List } from "./styles";
 
 import { TextSmall, TextTitle } from "../../components/Texts";
-import { UserContext } from "../../context/UserContext";
+import { UserDBContext } from "../../context/UserDBContext";
+import { ListItem } from "../../components/ListItem";
+import { LoadingScreen } from "../../components/LoadingScreen.js";
 
 
 
@@ -12,15 +14,39 @@ import { UserContext } from "../../context/UserContext";
 
 export function Historic() {
 
-    const { userDataContext } = useContext(UserContext)
+    const { userDBContext } = useContext(UserDBContext)
+
+    if (!userDBContext) {
+        return (
+            <Container>
+                <LoadingScreen />
+            </Container>
+        )
+    }
 
     return (
         <Container>
             <TextTitle
-                text={'Historic'}
+                text={'Agendamentos'}
+                styles={{
+                    marginBottom: 20
+                }}
             />
-            <TextSmall
-                text={userDataContext.email}
+            <List
+                data={userDBContext.historic}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ index, item }) => {
+                    return (
+                        <ListItem
+                            origin={`Origem: ${item.origin}`}
+                            destiny={`Destino ${item.destiny}`}
+                            passengers={`Passageiros: ${item.passengers}`}
+                            price={`R$ ${item.price}`}
+                            status={item.status}
+                            dateScheduled={item.dateTime}
+                        />
+                    )
+                }}
             />
         </Container>
     )

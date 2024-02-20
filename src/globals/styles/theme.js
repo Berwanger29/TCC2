@@ -7,7 +7,11 @@ export default {
         white: "#ffffff",
         tabBarIconColorActive: "#DEB047",
         tabBarIconColor: "#617192",
-        tabBarBackground: "#344468"
+        tabBarBackground: "#344468",
+        statusCanceled: "#CC3C3C",
+        statusWaiting: "#fca311",
+        statusScheduled: "#50C878",
+        statusFinished: "#818589",
     },
     fonts: {
         titleBold: 'Oswald_700Bold',

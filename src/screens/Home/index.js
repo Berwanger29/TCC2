@@ -25,11 +25,14 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import theme from "../../globals/styles/theme.js";
 import { useNavigation } from "@react-navigation/native";
+import format from "pretty-format";
+import { UserDBContext } from "../../context/UserDBContext.js";
 
 
 export function Home() {
 
     const { userDataContext } = useContext(UserContext)
+    const { userDBContext, setUserDBContext } = useContext(UserDBContext)
 
     const navigation = useNavigation();
 
@@ -42,8 +45,8 @@ export function Home() {
         const docRef = doc(db, "passengers", userDataContext.uid)
         const docSnap = await getDoc(docRef)
 
-        console.log(docSnap.data())
         setUserName(docSnap.data().name)
+        setUserDBContext(docSnap.data())
     }
 
     function getGreeting() {
@@ -70,7 +73,6 @@ export function Home() {
     }
 
     useEffect(() => {
-        console.log("Home screen")
         getUserDataDB()
     }, [])
 
