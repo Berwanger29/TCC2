@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useMemo, useState } from "react";
+import { Alert } from "react-native";
 
 import {
     Container,
@@ -19,14 +20,13 @@ import {
 } from "../../components/DefaultButton";
 import { GenericHeader } from "../../components/GenericHeader";
 
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import theme from "../../globals/styles/theme"
-import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
-import format from "pretty-format";
-import { ConfirmationController } from "../../controllers/ConfirmationController";
 import { UserContext } from "../../context/UserContext";
+import { useNavigation } from "@react-navigation/native";
+import RadioGroup from 'react-native-radio-buttons-group';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { ConfirmationController } from "../../controllers/ConfirmationController";
 
 
 
@@ -37,11 +37,24 @@ export function Schedule() {
     const { userDataContext } = useContext(UserContext)
     const navigation = useNavigation()
 
+    const radioButtons = useMemo(() => ([
+        {
+            id: 'Novo Airão', // acts as primary key, should be unique and non-empty string
+            label: 'Novo Airão',
+            value: 'Novo Airão'
+        },
+        {
+            id: 'Manaus',
+            label: 'Manaus',
+            value: 'Manaus'
+        }
+    ]), []);
+
     // const [yesterday, setYesterday] = useState(new Date())
 
+    const [selectedRadioButton, setSelectedRadioButton] = useState("");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [datePickerVisible, setDatePickerVisible] = useState(false);
-
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [timePickerVisible, setTimePickerVisible] = useState(false);
 
@@ -170,6 +183,28 @@ export function Schedule() {
                         onConfirm={handleTimeConfirm}
                         onCancel={hideTimePicker}
                     />
+                </InputWrapper>
+                <InputWrapper>
+                    <TextH2
+                        text="Selecione um destino"
+                    />
+                    <RadioGroup
+                        radioButtons={radioButtons}
+                        onPress={setSelectedRadioButton}
+                        selectedId={selectedRadioButton}
+                        containerStyle={{
+                            alignSelf: "center",
+                            alignItems: "flex-start",
+                        }}
+
+                    />
+                </InputWrapper>
+
+                <InputWrapper>
+                    <TextH2
+                        text="Quantas pessoas ?"
+                    />
+
                 </InputWrapper>
             </InputsContainer>
 
