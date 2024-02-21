@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 
 import {
     Container,
@@ -20,19 +20,18 @@ import {
 } from "../../components/DefaultButton";
 import { GenericHeader } from "../../components/GenericHeader";
 
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import RadioGroup from 'react-native-radio-buttons-group';
+import { Picker } from '@react-native-picker/picker';
 
 import theme from "../../globals/styles/theme"
 import { UserContext } from "../../context/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import RadioGroup from 'react-native-radio-buttons-group';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { ConfirmationController } from "../../controllers/ConfirmationController";
 
 
 
-
-
-export function Schedule() {
+export function Schedule({ props }) {
 
     const { userDataContext } = useContext(UserContext)
     const navigation = useNavigation()
@@ -52,11 +51,12 @@ export function Schedule() {
 
     // const [yesterday, setYesterday] = useState(new Date())
 
-    const [selectedRadioButton, setSelectedRadioButton] = useState("");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [datePickerVisible, setDatePickerVisible] = useState(false);
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [timePickerVisible, setTimePickerVisible] = useState(false);
+    const [selectedRadioButton, setSelectedRadioButton] = useState("");
+    const [amountPassengersPicker, setAmountPassengersPicker] = useState(1)
 
     // function YesterdayDate() {
     //     const today = new Date();
@@ -204,6 +204,39 @@ export function Schedule() {
                     <TextH2
                         text="Quantas pessoas ?"
                     />
+                    <Picker
+                        selectedValue={amountPassengersPicker}
+                        onValueChange={(itemValue, itemIndex) =>
+                            setAmountPassengersPicker(itemValue)
+                        }
+                        style={{
+                            color: theme.colors.yellow,
+                            width: 100,
+
+                        }}
+
+                    >
+                        <Picker.Item
+                            color={Platform.OS === "ios" ? theme.colors.yellow : "#000"}
+                            label="1"
+                            value="1"
+                        />
+                        <Picker.Item
+                            color={Platform.OS === "ios" ? theme.colors.yellow : "#000"}
+                            label="2"
+                            value="2"
+                        />
+                        <Picker.Item
+                            color={Platform.OS === "ios" ? theme.colors.yellow : "#000"}
+                            label="3"
+                            value="3"
+                        />
+                        <Picker.Item
+                            color={Platform.OS === "ios" ? theme.colors.yellow : "#000"}
+                            label="4"
+                            value="4"
+                        />
+                    </Picker>
 
                 </InputWrapper>
             </InputsContainer>
