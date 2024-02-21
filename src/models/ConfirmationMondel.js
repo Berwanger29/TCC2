@@ -2,7 +2,6 @@ import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"
 import { db } from "../../firebase"
 
 import * as Crypto from 'expo-crypto'
-import format from "pretty-format"
 
 export class ConfirmationModel {
     constructor(

@@ -7,6 +7,7 @@ export const Container = styled(SafeAreaView)`
     background-color: ${({ theme }) => theme.colors.blue};
 `
 
-export const WrapperButtons = styled.View`
-    
+export const Scroll = styled.ScrollView`
+    flex: 1;
+    padding: 10px 20px;
 `

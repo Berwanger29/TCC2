@@ -4,12 +4,14 @@ import { FirstLogin } from "../screens/FirstLogin";
 import { LoginOptions } from "../screens/LoginOptions";
 import { CreateAccountWithEmail } from "../screens/CreateAccountWithEmail";
 import { Login } from "../screens/Login";
-
-import theme from "../globals/styles/theme";
 import { NavBottomTabs } from "./NavBottomTabs";
 import { Schedule } from "../screens/Schedule";
 import { Confirmation } from "../screens/Confirmation";
+import { AccountScreen } from "../screens/AccountScreen";
 
+import theme from "../globals/styles/theme";
+import { Privacy } from "../screens/Privacy";
+import { About } from "../screens/About";
 
 const Stack = createNativeStackNavigator()
 
@@ -60,6 +62,21 @@ export function NavScreens() {
             <Stack.Screen
                 name="Confirmation"
                 component={Confirmation}
+            />
+
+            <Stack.Screen
+                name="AccountScreen"
+                component={AccountScreen}
+            />
+
+            <Stack.Screen
+                name="Privacy"
+                component={Privacy}
+            />
+
+            <Stack.Screen
+                name="About"
+                component={About}
             />
 
         </Stack.Navigator>

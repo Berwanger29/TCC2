@@ -34,7 +34,11 @@ export function Confirmation() {
             </Wrapper>
 
             <DefaultButton
-                onPress={() => navigation.navigate("Home")}
+                onPress={() => {
+                    let triggerUserEffect = 1;
+                    triggerUserEffect++
+                    navigation.navigate("Home", { triggerUserEffect: triggerUserEffect })
+                }}
                 style={{
                     // position: "absolute",
                     // bottom: SafeAreaView

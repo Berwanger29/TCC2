@@ -29,14 +29,16 @@ import format from "pretty-format";
 import { UserDBContext } from "../../context/UserDBContext.js";
 
 
-export function Home() {
+export function Home({ route }) {
 
     const { userDataContext } = useContext(UserContext)
     const { userDBContext, setUserDBContext } = useContext(UserDBContext)
-
+    const { triggerUserEffect } = route.params;
     const navigation = useNavigation();
 
+
     const [userName, setUserName] = useState("")
+    const [trigger, setTrigger] = useState(0)
 
     async function getUserDataDB() {
         if (userName !== "") {
@@ -73,8 +75,11 @@ export function Home() {
     }
 
     useEffect(() => {
+        console.log(triggerUserEffect)
+        setTrigger(triggerUserEffect)
         getUserDataDB()
-    }, [])
+    }, [trigger])
+
 
     if (userName === "") {
         return (

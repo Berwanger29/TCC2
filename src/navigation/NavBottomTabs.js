@@ -28,6 +28,7 @@ export function NavBottomTabs() {
             <Tab.Screen
                 name='Home'
                 component={Home}
+                initialParams={{ triggerUserEffect: 0 }}
                 options={{
                     tabBarIcon: ({ focused }) => <AntDesign
                         name="home"

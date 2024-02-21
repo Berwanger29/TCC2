@@ -76,11 +76,11 @@ export function Schedule() {
     };
 
     async function confirm(formatedDate) {
-
         const newSchedule = new ConfirmationController()
         const isAddedHistoricSuccess = newSchedule.ConfirmationUploadController(userDataContext.uid, formatedDate);
 
         if (isAddedHistoricSuccess) {
+
             navigation.navigate("Confirmation")
         }
     }

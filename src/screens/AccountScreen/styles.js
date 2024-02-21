@@ -7,6 +7,6 @@ export const Container = styled(SafeAreaView)`
     background-color: ${({ theme }) => theme.colors.blue};
 `
 
-export const WrapperButtons = styled.View`
+export const ButtonsWrapper = styled.View`
     
 `
