@@ -6,6 +6,7 @@ import { TextTitle } from "../../components/Texts";
 
 import { UserContext } from "../../context/UserContext"
 import { ProfileButtons } from "../../components/ProfileButtons";
+import { GenericHeader } from "../../components/GenericHeader"
 
 export function AccountScreen() {
 
@@ -14,14 +15,17 @@ export function AccountScreen() {
 
     return (
         <Container>
-            <TextTitle
-                text={'Sua conta'}
+            <GenericHeader
+                text="Sobre"
+                backButton
+                style={{
+                    marginBottom: 20
+                }}
             />
-
             <ButtonsWrapper>
                 <ProfileButtons
-                    text="texto qualquer"
-                    iconName="account"
+                    text={userDataContext.email}
+                    disableButton
                 />
             </ButtonsWrapper>
         </Container>

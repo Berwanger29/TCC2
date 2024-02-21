@@ -15,16 +15,31 @@ import theme from "../../globals/styles/theme"
 export function ProfileButtons({
     text,
     onPress,
-    iconName = ""
+    iconName = "",
+    disableButton = false
 }) {
     return (
         <Container
             onPress={onPress}
+            activeOpacity={disableButton}
         >
             <WrapperIconAndText>
-                <IconCircle>
-                    <MaterialCommunityIcons name={iconName} size={24} color="white" />
-                </IconCircle>
+
+
+                {
+                    iconName === "" ?
+                        (
+                            <></>
+                        )
+                        :
+                        (
+                            <IconCircle>
+                                <MaterialCommunityIcons name={iconName} size={24} color="white" />
+                            </IconCircle>
+                        )
+                }
+
+
                 <Textregular
                     text={text}
                 />

@@ -101,14 +101,13 @@ export function Home({ route }) {
                 onPress={() => navigation.navigate("Schedule")}
             >
                 <Textregular
-                    text="Viajar"
+                    text="Agendar"
                     style={{
                         color: theme.colors.blue,
                         fontSize: 30,
                         marginRight: 10
                     }}
                 />
-                <MaterialCommunityIcons name="car-hatchback" size={60} color={theme.colors.blue} />
             </TripButton>
 
         </Container>

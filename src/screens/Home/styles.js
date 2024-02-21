@@ -15,7 +15,6 @@ export const Header = styled.View`
 export const TripButton = styled.TouchableOpacity`
     width: 100%;
     height: 100px;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
     background-color: ${({ theme }) => theme.colors.yellow};
