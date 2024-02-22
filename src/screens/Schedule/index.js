@@ -1,5 +1,12 @@
-import { useContext, useMemo, useState } from "react";
-import { Alert, Platform } from "react-native";
+import {
+    useContext,
+    useMemo,
+    useState
+} from "react";
+import {
+    Alert,
+    Platform
+} from "react-native";
 
 import {
     Container,
@@ -11,8 +18,6 @@ import {
 import {
     TextButton,
     TextH2,
-    TextSmall,
-    TextTitle,
     Textregular
 } from "../../components/Texts";
 import {
@@ -25,13 +30,14 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
 
 import theme from "../../globals/styles/theme"
+import moment from "moment";
 import { UserContext } from "../../context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import { ConfirmationController } from "../../controllers/ConfirmationController";
 
 
 
-export function Schedule({ props }) {
+export function Schedule() {
 
     const { userDataContext } = useContext(UserContext)
     const navigation = useNavigation()
@@ -49,7 +55,7 @@ export function Schedule({ props }) {
         }
     ]), []);
 
-    // const [yesterday, setYesterday] = useState(new Date())
+
 
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [datePickerVisible, setDatePickerVisible] = useState(false);
@@ -58,13 +64,6 @@ export function Schedule({ props }) {
     const [selectedRadioButton, setSelectedRadioButton] = useState("");
     const [amountPassengersPicker, setAmountPassengersPicker] = useState(1)
 
-    // function YesterdayDate() {
-    //     const today = new Date();
-    //     const yesterday = new Date(today);
-    //     yesterday.setDate(yesterday.getDate() - 1);
-    //     // return yesterday.toISOString().split('T')[0];
-    //     setYesterday(yesterday.toISOString().split('T')[0])
-    // }
 
     function showDatePicker() {
         setDatePickerVisible(true);
@@ -100,32 +99,26 @@ export function Schedule({ props }) {
 
     function handleConfirmation() {
 
-        let formatedDate = `${selectedDate.getFullYear()}Y ${selectedDate.getMonth()}M ${selectedDate.getDate()}D ${selectedTime.getHours()}H ${selectedTime.getMinutes()}Min`
-        // let formatedDate = new Date();
-        // let formatedDate = `${selectedDate.getFullYear()}-${selectedDate.getMonth()}-${selectedDate.getDay()}T00:${selectedTime.getHours()}:${selectedTime.getMinutes()}.000Z`
-        console.log(formatedDate)
 
 
-        Alert.alert(
-            "Confirmação",
-            `Você deseja realmente confirmar sua viagem na data ${selectedDate.toLocaleDateString()} as ${selectedTime.getHours()}:${selectedTime.getMinutes()} ?`,
-            [
-                {
-                    text: "Modificar",
-                    onPress: () => { },
-                    style: "cancel"
-                },
-                {
-                    text: "Confirmar",
-                    onPress: () => confirm(formatedDate)
-                }
-            ]
-        )
+
+        // Alert.alert(
+        //     "Confirmação",
+        //     `Você deseja realmente confirmar sua viagem na data ${selectedDate.toLocaleDateString()} as ${selectedTime.getHours()}:${selectedTime.getMinutes()} ?`,
+        //     [
+        //         {
+        //             text: "Modificar",
+        //             onPress: () => { },
+        //             style: "cancel"
+        //         },
+        //         {
+        //             text: "Confirmar",
+        //             // onPress: () => confirm()
+        //             onPress: () => {}
+        //         }
+        //     ]
+        // )
     }
-
-    // useEffect(() => {
-    //     YesterdayDate()
-    // }, [])
 
     return (
         <Container>
@@ -148,7 +141,8 @@ export function Schedule({ props }) {
                         onPress={() => showDatePicker()}
                     >
                         <Textregular
-                            text={selectedDate ? selectedDate.toLocaleDateString() : 'Data não selecionada'}
+                            text={`${moment().locale('pt-BR').format('L')}`}
+                        // text={selectedDate ? selectedDate.toLocaleDateString() : 'Data não selecionada'}
                         />
                     </InvisibleButton>
 
@@ -170,7 +164,8 @@ export function Schedule({ props }) {
                         onPress={() => showTimePicker()}
                     >
                         <Textregular
-                            text={selectedTime ? `${selectedTime.getHours()}:${selectedTime.getMinutes()}` : 'Hora não selecionada'}
+                            text={`${moment().format('LT')}`}
+                        // text={selectedTime ? `${selectedTime.getHours()}:${selectedTime.getMinutes()}` : 'Hora não selecionada'}
                         />
                     </InvisibleButton>
                     <DateTimePickerModal

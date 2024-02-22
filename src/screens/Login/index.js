@@ -33,7 +33,7 @@ export function Login() {
         setUserDataContext(userData)
 
 
-        isLoginSuccessful ? navigation.navigate("NavBottomTabs") : Alert.alert("Erro", "Alguma coisa deu errado")
+        isLoginSuccessful ? Alert.alert("Sucesso", "Sua conta foi criada com sucesso") : Alert.alert("Erro", "Alguma coisa deu errado")
         // return userData
     }
 

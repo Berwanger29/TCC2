@@ -62,7 +62,7 @@ export function CreateAccountWithEmail() {
         const { isLoginSuccessful, userData } = await newUser.HandleNewEmailUser()
         setUserDataContext(userData)
 
-        isLoginSuccessful ? navigation.navigate("NavBottomTabs") : Alert.alert("Erro", "Alguma coisa deu errado")
+        isLoginSuccessful ? Alert.alert("Sucesso", "Sua conta foi criada com sucesso") : Alert.alert("Erro", "Alguma coisa deu errado")
 
     }
 
