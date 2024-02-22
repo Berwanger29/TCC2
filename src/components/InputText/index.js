@@ -14,7 +14,7 @@ export function InputText({
     isPassword = false
 }) {
 
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+    const [isPasswordVisible, setIsPasswordVisible] = useState(true)
 
     function ToggleSeePasswrod() {
         setIsPasswordVisible(!isPasswordVisible)
@@ -29,9 +29,9 @@ export function InputText({
                 value={value}
                 isPassword={isPassword}
                 style={style}
-                secureTextEntry={isPasswordVisible}
+                secureTextEntry={isPassword && isPasswordVisible}
             />
-
+ 
             {isPassword ?
                 (
                     <TogglePasswordButton

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Alert } from "react-native";
 import {
     Container,
@@ -17,20 +17,23 @@ import {
 } from "../../components/Texts";
 
 import { CreateAccountWithEmailController } from "../../controllers/CreateAccountController";
-
-function handleTextInput(e) {
-    console.log(e)
-}
-
+import { UserContext } from "../../context/UserContext";
+import { useNavigation } from "@react-navigation/native";
 
 export function CreateAccountWithEmail() {
 
-    const [email, setEmail] = useState('');
-    const [verifyEmail, setVerifyEmail] = useState('');
-    const [passowrd, setPassword] = useState('');
-    const [verifyPassword, setVerifyPassowrd] = useState('');
+    const { setUserDataContext } = useContext(UserContext)
 
-    function Login() {
+    const navigation = useNavigation()
+
+    const [name, setName] = useState('Vinicius');
+    const [email, setEmail] = useState('email2@teste.com');
+    const [verifyEmail, setVerifyEmail] = useState('email2@teste.com');
+    const [password, setPassword] = useState('123123');
+    const [verifyPassword, setVerifyPassowrd] = useState('123123');
+
+
+    async function CreateUser() {
         if (email !== verifyEmail) {
             Alert.alert(
                 "Erro",
@@ -39,18 +42,28 @@ export function CreateAccountWithEmail() {
             return
         }
 
-        if (passowrd !== verifyPassword) {
+        if (password !== verifyPassword) {
             Alert.alert(
                 "Erro",
                 "As senhas não coincidem"
             )
-
             return
         }
 
-        const newUser = new CreateAccountWithEmailController()
-        newUser.HandleNewEmailUser()
-        
+        if (name === "") {
+            Alert.alert(
+                "Erro",
+                "Digite o seu nome"
+            )
+            return
+        }
+
+        const newUser = new CreateAccountWithEmailController(name, email, password)
+        const { isLoginSuccessful, userData } = await newUser.HandleNewEmailUser()
+        setUserDataContext(userData)
+
+        isLoginSuccessful ? Alert.alert("Sucesso", "Sua conta foi criada com sucesso") : Alert.alert("Erro", "Alguma coisa deu errado")
+
     }
 
     return (
@@ -65,6 +78,18 @@ export function CreateAccountWithEmail() {
                     }}
                 />
                 <InputWrapper>
+                    <TextH2
+                        text="Digite seu nome"
+                        style={{
+                            marginBottom: 5
+                        }}
+                    />
+                    <InputText
+                        onChangeText={(e) => { setEmail(e) }}
+                        value={name}
+                        placeholder={"nome"}
+                    />
+
                     <TextH2
                         text="Digite seu e-mail"
                         style={{
@@ -88,6 +113,7 @@ export function CreateAccountWithEmail() {
                             setVerifyEmail(e)
                             return e
                         }}
+                        value={verifyEmail}
                         placeholder={"reescreva seu e-mail"}
 
                     />
@@ -99,6 +125,7 @@ export function CreateAccountWithEmail() {
                             setPassword(e)
                             return e
                         }}
+                        value={password}
                         isPassword={true}
                         placeholder={"senha"}
 
@@ -111,6 +138,7 @@ export function CreateAccountWithEmail() {
                             setVerifyPassowrd(e)
                             return e
                         }}
+                        value={verifyPassword}
                         isPassword={true}
                         placeholder={"confirme sua senha"}
                     />
@@ -119,7 +147,7 @@ export function CreateAccountWithEmail() {
             </KeyboardView>
             <DefaultButton
                 inverted={true}
-                onPress={() => Login()}
+                onPress={() => CreateUser()}
             >
                 <TextButton
                     text={"Criar conta"}

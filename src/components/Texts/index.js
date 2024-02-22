@@ -2,6 +2,7 @@ import {
     TextButtonStyles,
     TextRegularLight,
     TextStyleH2,
+    TextStyleRegular,
     TextTitleStyles,
 } from "./styles";
 
@@ -29,6 +30,19 @@ export function TextH2({
         >
             {text}
         </TextStyleH2>
+    )
+}
+
+export function Textregular({
+    text,
+    style
+}) {
+    return (
+        <TextStyleRegular
+            style={style}
+        >
+            {text}
+        </TextStyleRegular>
     )
 }
 

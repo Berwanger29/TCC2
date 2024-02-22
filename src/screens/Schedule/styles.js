@@ -3,23 +3,24 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export const Container = styled(SafeAreaView)`
     flex: 1;
-    justify-content: space-between;
     padding: ${({ theme }) => theme.measures.paddingScreenVertical}px ${({ theme }) => theme.measures.paddingScreenHorizontal}px;
     background-color: ${({ theme }) => theme.colors.blue};
+    justify-content: space-between;
 `
 
-export const Header = styled.View`
-    width: 100%;
+export const InputsContainer = styled.View`
+    flex: 1;
 `
 
-export const TripButton = styled.TouchableOpacity`
-    width: 100%;
-    height: 100px;
+export const InputWrapper = styled.View`
+    align-items: center;
+    margin-bottom: 20px;
+`
+export const InvisibleButton = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
-    background-color: ${({ theme }) => theme.colors.yellow};
-    border: 1px solid ${({ theme }) => theme.colors.yellow};
-    border-radius: ${({ theme }) => theme.measures.border}px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid ${({ theme })=> theme.colors.yellow};
+    border-radius: 10px;
 `
-
-

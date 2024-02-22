@@ -1,8 +1,10 @@
 //managed workflow
+import { useState } from "react";
 import { NavContainer } from './src/navigation/NavContainer';
 
-import theme from './src/globals/styles/theme';
+
 import { ThemeProvider } from 'styled-components';
+
 import {
   useFonts,
   Oswald_700Bold,
@@ -16,8 +18,19 @@ import {
   SourceSansPro_700Bold
 } from '@expo-google-fonts/source-sans-pro';
 
+import { StatusBar } from 'expo-status-bar';
+
+import theme from './src/globals/styles/theme';
+
+import { UserContext } from "./src/context/UserContext";
+import { UserDBContext } from "./src/context/UserDBContext";
+
 
 export default function App() {
+
+  const [userDataContext, setUserDataContext] = useState("")
+  const [userDBContext, setUserDBContext] = useState("")
+
 
   let [fontsLoaded, fontError] = useFonts({
     Oswald_700Bold,
@@ -36,9 +49,20 @@ export default function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <NavContainer />
-      </ThemeProvider>
+      <StatusBar
+        style='light'
+      />
+      <UserDBContext.Provider
+        value={{ userDBContext, setUserDBContext }}
+      >
+        <UserContext.Provider
+          value={{ userDataContext, setUserDataContext }}
+        >
+          <ThemeProvider theme={theme}>
+            <NavContainer />
+          </ThemeProvider>
+        </UserContext.Provider>
+      </UserDBContext.Provider>
     </>
   );
 }
