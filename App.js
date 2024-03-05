@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { NavContainer } from './src/navigation/NavContainer';
 
-
 import { ThemeProvider } from 'styled-components';
 
 import {
@@ -24,6 +23,7 @@ import theme from './src/globals/styles/theme';
 
 import { UserContext } from "./src/context/UserContext";
 import { UserDBContext } from "./src/context/UserDBContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function App() {
@@ -45,6 +45,8 @@ export default function App() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
+
 
 
   return (

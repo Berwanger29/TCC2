@@ -27,11 +27,12 @@ import theme from "../../globals/styles/theme.js";
 import { useNavigation } from "@react-navigation/native";
 import format from "pretty-format";
 import { UserDBContext } from "../../context/UserDBContext.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export function Home({ route }) {
 
-    const { userDataContext } = useContext(UserContext)
+    const { userDataContext, setUserDataContext } = useContext(UserContext)
     const { userDBContext, setUserDBContext } = useContext(UserDBContext)
     const { triggerUserEffect } = route.params;
     const navigation = useNavigation();
@@ -40,12 +41,36 @@ export function Home({ route }) {
     const [userName, setUserName] = useState("")
     const [trigger, setTrigger] = useState(0)
 
-    async function getUserDataDB() {
-        if (userName !== "") {
+    async function getLoginUserData() {
+        try {
+            const jsonValue = await AsyncStorage.getItem('loginUserData')
+            let aux = JSON.parse(jsonValue)
+            setUserDataContext(aux)
+
+            return jsonValue != null ? aux : false;
+        } catch (err) {
+            console.error(err)
             return
         }
-        const docRef = doc(db, "passengers", userDataContext.uid)
-        const docSnap = await getDoc(docRef)
+    }
+
+    async function getUserDataDB() {
+
+        let docSnap;
+
+        const storedData = await getLoginUserData()
+        // console.log(storedData
+        //     .then((a) => {
+        //         console.log(a)
+        //     }))
+
+        if (userDataContext) {
+            const docRef = doc(db, "passengers", userDataContext.uid)
+            docSnap = await getDoc(docRef)
+        } else if (storedData) {
+            const docRef = doc(db, "passengers", storedData.uid)
+            docSnap = await getDoc(docRef)
+        }
 
         setUserName(docSnap.data().name)
         setUserDBContext(docSnap.data())
@@ -75,7 +100,6 @@ export function Home({ route }) {
     }
 
     useEffect(() => {
-        console.log(triggerUserEffect)
         setTrigger(triggerUserEffect)
         getUserDataDB()
     }, [trigger])

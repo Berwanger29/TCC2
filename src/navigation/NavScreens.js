@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { FirstLogin } from "../screens/FirstLogin";
@@ -12,17 +13,39 @@ import { AccountScreen } from "../screens/AccountScreen";
 import theme from "../globals/styles/theme";
 import { Privacy } from "../screens/Privacy";
 import { About } from "../screens/About";
-import { useState } from "react";
+import { UserContext } from "../context/UserContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator()
 
 export function NavScreens() {
 
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const { userDataContext, setUserDataContext } = useContext(UserContext)
+    const [hasLogin, setHasLogin] = useState(false)
 
-    // if(){
-        
-    // }
+    async function getLoginUserData() {
+        try {
+            const jsonValue = await AsyncStorage.getItem('loginUserData')
+            let aux = JSON.parse(jsonValue)
+            setUserDataContext(aux)
+
+            return jsonValue != null ? aux : false;
+        } catch (err) {
+            console.error(err)
+            return
+        }
+    }
+
+    useEffect(() => {
+        if (getLoginUserData() != false) {
+            setHasLogin(true)
+        }
+
+        if (userDataContext !== null) {
+            setHasLogin(true)
+        }
+
+    }, [])
 
     return (
         <Stack.Navigator
@@ -36,32 +59,9 @@ export function NavScreens() {
             }}
         >
             {
-                isSignedIn ?
+                hasLogin == true ?
                     (
                         <>
-                            <Stack.Screen
-                                name="FirstLogin"
-                                component={FirstLogin}
-                            />
-
-                            <Stack.Screen
-                                name="LoginOptions"
-                                component={LoginOptions}
-                                options={{
-                                    gestureEnabled: false //prevents going back
-                                }}
-                            />
-
-                            <Stack.Screen
-                                name="CreateAccountWithEmail"
-                                component={CreateAccountWithEmail}
-                            />
-
-                            <Stack.Screen
-                                name="Login"
-                                component={Login}
-                            />
-
                             <Stack.Screen
                                 name="NavBottomTabs"
                                 component={NavBottomTabs}

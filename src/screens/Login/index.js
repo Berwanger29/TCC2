@@ -4,7 +4,6 @@ import {
     InputWrapper
 } from "./styles"
 
-import { LoginUserController } from "../../controllers/LoginUserController"
 
 import { BackButton } from "../../components/BackButton"
 import { TextButton, TextH2, TextTitle } from "../../components/Texts"
@@ -12,9 +11,13 @@ import { InputText } from "../../components/InputText"
 import { useState } from "react"
 import { DefaultButton } from "../../components/DefaultButton"
 
+import { LoginUserController } from "../../controllers/LoginUserController"
+import { UserContext } from "../../context/UserContext"
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native"
 import { Alert } from "react-native"
-import { UserContext } from "../../context/UserContext"
+import format from "pretty-format"
 
 export function Login() {
 
@@ -25,17 +28,26 @@ export function Login() {
     const [email, setEmail] = useState("email@teste.com")
     const [password, setPassword] = useState("123123")
 
-    async function loginEmailAndPassword() {
+    async function storeLoginUserData(value) {
+        try {
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem('loginUserData', jsonValue)
+        } catch (err) {
+            console.error(err)
+            return
+        }
+    }
 
+    async function loginEmailAndPassword() {
 
         const newLogin = new LoginUserController()
         const { isLoginSuccessful, userData } = await newLogin.HandleLoginUserEmailAndPassword(email, password)
+        storeLoginUserData(userData)
         setUserDataContext(userData)
 
-
         isLoginSuccessful ? Alert.alert("Sucesso", "Sua conta foi criada com sucesso") : Alert.alert("Erro", "Alguma coisa deu errado")
-        // return userData
     }
+
 
     return (
         <Container>

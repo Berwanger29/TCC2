@@ -46,18 +46,23 @@ export function Schedule() {
         {
             id: 'Novo Airão', // acts as primary key, should be unique and non-empty string
             label: 'Novo Airão',
-            value: 'Novo Airão'
+            value: 'Novo Airão',
+            color: theme.colors.yellow,
+            // labelStyle: {
+            //     color: theme.colors.white //modified at the root component
+            // }
         },
         {
             id: 'Manaus',
             label: 'Manaus',
-            value: 'Manaus'
+            value: 'Manaus',
+            color: theme.colors.yellow,
         }
     ]), []);
 
 
 
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState();
     const [datePickerVisible, setDatePickerVisible] = useState(false);
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [timePickerVisible, setTimePickerVisible] = useState(false);
@@ -92,15 +97,11 @@ export function Schedule() {
         const isAddedHistoricSuccess = newSchedule.ConfirmationUploadController(userDataContext.uid, formatedDate);
 
         if (isAddedHistoricSuccess) {
-
             navigation.navigate("Confirmation")
         }
     }
 
     function handleConfirmation() {
-
-
-
 
         // Alert.alert(
         //     "Confirmação",
