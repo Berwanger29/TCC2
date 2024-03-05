@@ -16,112 +16,81 @@ import { About } from "../screens/About";
 import { UserContext } from "../context/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
 export function NavScreens() {
+  const { userDataContext, setUserDataContext } = useContext(UserContext);
+  const [hasLogin, setHasLogin] = useState(false);
 
-    const { userDataContext, setUserDataContext } = useContext(UserContext)
-    const [hasLogin, setHasLogin] = useState(false)
+  async function getLoginUserData() {
+    try {
+      const jsonValue = await AsyncStorage.getItem("loginUserData");
+      let aux = JSON.parse(jsonValue);
+      setUserDataContext(aux);
 
-    async function getLoginUserData() {
-        try {
-            const jsonValue = await AsyncStorage.getItem('loginUserData')
-            let aux = JSON.parse(jsonValue)
-            setUserDataContext(aux)
-
-            return jsonValue != null ? aux : false;
-        } catch (err) {
-            console.error(err)
-            return
-        }
+      //   return jsonValue != null ? aux : false;
+      return aux;
+    } catch (err) {
+      console.error(err);
+      return;
     }
+  }
 
-    useEffect(() => {
-        if (getLoginUserData() != false) {
-            setHasLogin(true)
-        }
+  useEffect(() => {
+    // if (getLoginUserData() !== null && userDataContext !== null) {
+    //   setHasLogin(true);
+    // }
+    if (getLoginUserData() === null) {
+      setHasLogin(false);
+    } else {
+      setHasLogin(true);
+    }
+  }, []);
 
-        if (userDataContext !== null) {
-            setHasLogin(true)
-        }
+  return (
+    <Stack.Navigator
+      initialRouteName="FirstLogin"
+      screenOptions={{
+        headerShown: false,
+        animation: "slide_from_right",
+        contentStyle: {
+          backgroundColor: theme.colors.blue,
+        },
+      }}
+    >
+      {hasLogin == true ? (
+        <>
+          <Stack.Screen name="NavBottomTabs" component={NavBottomTabs} />
 
-    }, [])
+          <Stack.Screen name="Schedule" component={Schedule} />
+          <Stack.Screen name="Confirmation" component={Confirmation} />
 
-    return (
-        <Stack.Navigator
-            initialRouteName="FirstLogin"
-            screenOptions={{
-                headerShown: false,
-                animation: "slide_from_right",
-                contentStyle: {
-                    backgroundColor: theme.colors.blue
-                }
+          <Stack.Screen name="AccountScreen" component={AccountScreen} />
+
+          <Stack.Screen name="Privacy" component={Privacy} />
+
+          <Stack.Screen name="About" component={About} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="FirstLogin" component={FirstLogin} />
+
+          <Stack.Screen
+            name="LoginOptions"
+            component={LoginOptions}
+            options={{
+              gestureEnabled: false, //prevents going back
             }}
-        >
-            {
-                hasLogin == true ?
-                    (
-                        <>
-                            <Stack.Screen
-                                name="NavBottomTabs"
-                                component={NavBottomTabs}
-                            />
+          />
 
-                            <Stack.Screen
-                                name="Schedule"
-                                component={Schedule}
-                            />
-                            <Stack.Screen
-                                name="Confirmation"
-                                component={Confirmation}
-                            />
+          <Stack.Screen
+            name="CreateAccountWithEmail"
+            component={CreateAccountWithEmail}
+          />
 
-                            <Stack.Screen
-                                name="AccountScreen"
-                                component={AccountScreen}
-                            />
-
-                            <Stack.Screen
-                                name="Privacy"
-                                component={Privacy}
-                            />
-
-                            <Stack.Screen
-                                name="About"
-                                component={About}
-                            />
-                        </>
-
-                    )
-                    :
-                    (
-                        <>
-                            <Stack.Screen
-                                name="FirstLogin"
-                                component={FirstLogin}
-                            />
-
-                            <Stack.Screen
-                                name="LoginOptions"
-                                component={LoginOptions}
-                                options={{
-                                    gestureEnabled: false //prevents going back
-                                }}
-                            />
-
-                            <Stack.Screen
-                                name="CreateAccountWithEmail"
-                                component={CreateAccountWithEmail}
-                            />
-
-                            <Stack.Screen
-                                name="Login"
-                                component={Login}
-                            />
-                        </>
-                    )
-            }
-
-        </Stack.Navigator>
-    )
+          <Stack.Screen name="Login" component={Login} />
+        </>
+      )}
+    </Stack.Navigator>
+  );
 }
