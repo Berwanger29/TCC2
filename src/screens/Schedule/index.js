@@ -49,7 +49,7 @@ export function Schedule() {
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(minimumTime());
+  const [selectedTime, setSelectedTime] = useState();
   const [timePickerVisible, setTimePickerVisible] = useState(false);
   const [selectedRadioButton, setSelectedRadioButton] = useState("");
   const [amountPassengersPicker, setAmountPassengersPicker] = useState(1);
@@ -72,17 +72,21 @@ export function Schedule() {
     setTimePickerVisible(false);
   }
   function handleTimeConfirm(time) {
-    console.log(moment(time).format("HH:mm"));
-    setSelectedTime(time);
-    hideTimePicker();
+    if (time < minimumTime()) {
+      setSelectedTime(minimumTime());
+      hideTimePicker();
+    } else {
+      setSelectedTime(time);
+      hideTimePicker();
+    }
   }
 
-  async function confirm(formatedDate) {
-    console.log(formatedDate);
+  async function confirm(schedule) {
+    console.log(schedule);
     const newSchedule = new ConfirmationController();
     const isAddedHistoricSuccess = newSchedule.ConfirmationUploadController(
       userDataContext.uid,
-      formatedDate
+      (dateTime = `${schedule.date} @ ${schedule.time}`)
     );
 
     if (isAddedHistoricSuccess) {
@@ -96,22 +100,28 @@ export function Schedule() {
       .format("DD/MM/YYYY");
     const formattedTime = moment(selectedTime).locale("pt-BR").format("HH:mm");
 
-    Alert.alert(
-      "Confirmação",
-      `Você deseja realmente confirmar sua viagem na data ${formattedDate} as ${formattedTime} ?`,
-      [
-        {
-          text: "Modificar",
-          onPress: () => {},
-          style: "cancel",
-        },
-        {
-          text: "Confirmar",
-          // onPress: () => confirm()
-          onPress: () => {},
-        },
-      ]
-    );
+    const price = amountPassengersPicker * 85;
+
+    if (selectedTime === undefined || selectedRadioButton === "") {
+      Alert.alert("Preencha todos os campos!");
+    } else {
+      Alert.alert(
+        "Confirmação",
+        `Você deseja realmente confirmar sua viagem na data ${formattedDate} às ${formattedTime} partindo de ${selectedRadioButton} com ${amountPassengersPicker} passageiros no valor de R$${price},00?`,
+        [
+          {
+            text: "Modificar",
+            onPress: () => {},
+            style: "cancel",
+          },
+          {
+            text: "Confirmar",
+            onPress: () =>
+              confirm({ date: formattedDate, time: formattedTime }),
+          },
+        ]
+      );
+    }
   }
 
   function minimumTime() {
