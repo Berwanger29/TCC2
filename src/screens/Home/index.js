@@ -16,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import format from "pretty-format";
 import { UserDBContext } from "../../context/UserDBContext.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ListItem } from "../../components/ListItem/index.js";
+import { View } from "react-native";
 
 export function Home({ route }) {
   const { userDataContext, setUserDataContext } = useContext(UserContext);
@@ -25,13 +27,14 @@ export function Home({ route }) {
 
   const [userName, setUserName] = useState("");
   const [trigger, setTrigger] = useState(0);
+  const [nextTrip, setNextTrip] = useState();
 
   async function getLoginUserData() {
     try {
       const jsonValue = await AsyncStorage.getItem("loginUserData");
       let aux = JSON.parse(jsonValue);
       setUserDataContext(aux);
-    
+
       return aux;
     } catch (err) {
       console.error(err);
@@ -60,6 +63,7 @@ export function Home({ route }) {
 
     setUserName(docSnap.data().name);
     setUserDBContext(docSnap.data());
+    getNextTrip(docSnap.data().historic);
   }
 
   function getGreeting() {
@@ -85,6 +89,25 @@ export function Home({ route }) {
     return greeting;
   }
 
+  function getTripDate(tripDate) {
+    const day = tripDate.slice(0, 2);
+    const month = tripDate.slice(3, 5);
+    const year = tripDate.slice(6);
+    return new Date(year, month, day);
+  }
+
+  function getNextTrip(trips) {
+    const nextTrips = trips.filter((trip) => trip.status === "agendado");
+
+    const sortedAsc = nextTrips.sort(
+      (objA, objB) =>
+        getTripDate(objA.dateTime.slice(0, -8)) -
+        getTripDate(objB.dateTime.slice(0, -8))
+    );
+
+    setNextTrip(sortedAsc[0]);
+  }
+
   useEffect(() => {
     setTrigger(triggerUserEffect);
     getUserDataDB();
@@ -102,7 +125,24 @@ export function Home({ route }) {
     <Container>
       <Header>
         <TextTitle text={`Olá ${userName}${getGreeting()}`} />
+        <TextSmall text="Sua próxima viagem" />
       </Header>
+
+      <View style={{ flex: 1, marginTop: 20, alignItems: "center" }}>
+        {nextTrip ? (
+          <ListItem
+            key={nextTrip.scheduleId}
+            origin={`Origem: ${nextTrip.origin}`}
+            destiny={`Viagem para: ${nextTrip.destiny}`}
+            passengers={`Passageiros: ${nextTrip.passengers}`}
+            price={`R$ ${nextTrip.price}`}
+            status={nextTrip.status}
+            dateScheduled={nextTrip.dateTime}
+          />
+        ) : (
+          <Textregular text="Você ainda não fez agendamentos!" />
+        )}
+      </View>
 
       <TripButton onPress={() => navigation.navigate("Schedule")}>
         <Textregular

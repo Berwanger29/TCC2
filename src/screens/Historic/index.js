@@ -34,7 +34,8 @@ export function Historic() {
             <ListItem
               key={item.scheduleId}
               origin={`Origem: ${item.origin}`}
-              destiny={`Destino ${item.destiny}`}
+              // destiny={`Destino: ${item.destiny}`}
+              destiny={`Viagem para: ${item.destiny}`}
               passengers={`Passageiros: ${item.passengers}`}
               price={`R$ ${item.price}`}
               status={item.status}

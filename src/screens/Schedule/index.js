@@ -72,13 +72,8 @@ export function Schedule() {
     setTimePickerVisible(false);
   }
   function handleTimeConfirm(time) {
-    if (time < minimumTime()) {
-      setSelectedTime(minimumTime());
-      hideTimePicker();
-    } else {
-      setSelectedTime(time);
-      hideTimePicker();
-    }
+    setSelectedTime(time);
+    hideTimePicker();
   }
 
   async function confirm(schedule) {
@@ -125,8 +120,8 @@ export function Schedule() {
   }
 
   function minimumTime() {
-    let hours = moment().locale("pt-br").format("HH");
-    let minutes = moment().locale("pt-br").format("mm");
+    let hours = moment(selectedDate).locale("pt-br").format("HH");
+    let minutes = moment(selectedDate).locale("pt-br").format("mm");
 
     if (minutes[1] !== "0") {
       let algorism = parseInt(minutes[1]);
