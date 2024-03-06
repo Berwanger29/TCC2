@@ -47,12 +47,6 @@ export function Home({ route }) {
 
     const storedData = await getLoginUserData();
 
-    // console.log(
-    //   storedData.then((a) => {
-    //     console.log(a);
-    //   })
-    // );
-
     if (userDataContext) {
       const docRef = doc(db, "passengers", userDataContext.uid);
       docSnap = await getDoc(docRef);
@@ -73,15 +67,15 @@ export function Home({ route }) {
 
     switch (true) {
       case hour > 6 && hour <= 12:
-        greeting = ", bom dia";
+        greeting = ", bom dia!";
         break;
         
       case hour > 12 && hour <= 18:
-        greeting = ", boa tarde";
+        greeting = ", boa tarde!";
         break;
 
       case hour > 18 || hour < 5:
-        greeting = ", boa noite";
+        greeting = ", boa noite!";
         break;
 
       default:
@@ -127,7 +121,7 @@ export function Home({ route }) {
     <Container>
       <Header>
         <TextTitle text={`Olá ${userName}${getGreeting()}`} />
-        <TextSmall text="Veja detalhes de sua próxima viagem!" />
+        <TextSmall text="Veja detalhes de sua próxima viagem" />
       </Header>
 
       <View style={{ flex: 1, marginTop: 20, alignItems: "center" }}>

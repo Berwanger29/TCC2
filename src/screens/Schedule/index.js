@@ -49,8 +49,6 @@ export function Schedule() {
 
   const [selectedDate, setSelectedDate] = useState(minimumTime());
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-  const [selectedTime, setSelectedTime] = useState();
-  const [timePickerVisible, setTimePickerVisible] = useState(false);
   const [selectedRadioButton, setSelectedRadioButton] = useState("");
   const [amountPassengersPicker, setAmountPassengersPicker] = useState(1);
 
@@ -63,17 +61,6 @@ export function Schedule() {
   function handleDateConfirm(date) {
     setSelectedDate(date);
     hideDatePicker();
-  }
-
-  function showTimePicker() {
-    setTimePickerVisible(true);
-  }
-  function hideTimePicker() {
-    setTimePickerVisible(false);
-  }
-  function handleTimeConfirm(time) {
-    if (time < selectedDate) setSelectedTime(time);
-    hideTimePicker();
   }
 
   async function confirm(schedule) {
@@ -96,7 +83,6 @@ export function Schedule() {
     const formattedDate = moment(selectedDate)
       .locale("pt-BR")
       .format("DD/MM/YYYY @ HH:mm");
-    // const formattedTime = moment(selectedTime).locale("pt-BR").format("HH:mm");
 
     const price = amountPassengersPicker * 85;
 
@@ -171,20 +157,10 @@ export function Schedule() {
             />
           </InvisibleButton>
 
-          {/* <DateTimePickerModal
-            date={selectedDate}
-            isVisible={datePickerVisible}
-            minimumDate={selectedDate}
-            mode="date"
-            onConfirm={handleDateConfirm}
-            onCancel={hideDatePicker}
-            locale="pt_BR"
-          /> */}
-
           <DateTimePickerModal
             date={selectedDate}
             isVisible={datePickerVisible}
-            minimumDate={new Date()}
+            minimumDate={minimumTime()}
             mode="datetime"
             onConfirm={handleDateConfirm}
             onCancel={hideDatePicker}
@@ -192,29 +168,6 @@ export function Schedule() {
             locale="pt_BR"
           />
         </InputWrapper>
-        {/* 
-        <InputWrapper>
-          <TextH2 text="Selecione um horário" />
-          <InvisibleButton onPress={() => showTimePicker()}>
-            <Textregular
-              text={
-                selectedTime
-                  ? `${moment(selectedTime).format("HH:mm")}`
-                  : "Hora não selecionada"
-              }
-            />
-          </InvisibleButton>
-          <DateTimePickerModal
-            date={selectedTime}
-            isVisible={timePickerVisible}
-            mode="time"
-            is24Hour
-            minuteInterval={10}
-            // minimumDate={minimumTime()}
-            onConfirm={handleTimeConfirm}
-            onCancel={hideTimePicker}
-          />
-        </InputWrapper> */}
 
         <InputWrapper>
           <TextH2 text="Selecione um destino" />
@@ -240,8 +193,9 @@ export function Schedule() {
             }
             style={{
               color: theme.colors.yellow,
-              width: 100,
+              width: "100%",
               alignSelf: "center",
+              marginTop: -60,
             }}
           >
             <Picker.Item
