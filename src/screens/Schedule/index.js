@@ -124,14 +124,14 @@ export function Schedule() {
     let minutes = moment(selectedDate).locale("pt-br").format("mm");
 
     if (minutes[1] !== "0") {
-      let algorism = parseInt(minutes[1]);
+      let algorism = Number(minutes[1]);
       let dif = 10 - algorism;
       minutes = Number(minutes) + dif;
     }
 
     const time = new Date(
       Number(moment(selectedDate).format("YYYY")),
-      Number(moment(selectedDate).format("MM")),
+      Number(moment(selectedDate).format("MM") - 1),
       Number(moment(selectedDate).format("DD")),
       Number(hours),
       Number(minutes)
@@ -205,6 +205,7 @@ export function Schedule() {
             containerStyle={{
               alignSelf: "center",
               alignItems: "flex-start",
+              flexDirection: "row",
             }}
           />
         </InputWrapper>
@@ -219,6 +220,7 @@ export function Schedule() {
             style={{
               color: theme.colors.yellow,
               width: 100,
+              alignSelf: "center",
             }}
           >
             <Picker.Item
@@ -246,7 +248,7 @@ export function Schedule() {
       </InputsContainer>
 
       <DefaultButton
-        // onPress={() => navigation.navigate("Confirmation")}
+        style={{ height: 75 }}
         onPress={() => handleConfirmation()}
       >
         <TextButton text="Confirmar" />
