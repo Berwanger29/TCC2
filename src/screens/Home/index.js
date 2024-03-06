@@ -72,13 +72,15 @@ export function Home({ route }) {
     hour = hour.getHours();
 
     switch (true) {
-      case hour > 0 && hour <= 12:
+      case hour > 6 && hour <= 12:
         greeting = ", bom dia";
         break;
+        
       case hour > 12 && hour <= 18:
         greeting = ", boa tarde";
         break;
-      case hour > 18 && hour <= 24:
+
+      case hour > 18 || hour < 5:
         greeting = ", boa noite";
         break;
 
@@ -125,7 +127,7 @@ export function Home({ route }) {
     <Container>
       <Header>
         <TextTitle text={`Olá ${userName}${getGreeting()}`} />
-        <TextSmall text="Sua próxima viagem" />
+        <TextSmall text="Veja detalhes de sua próxima viagem!" />
       </Header>
 
       <View style={{ flex: 1, marginTop: 20, alignItems: "center" }}>
@@ -135,7 +137,7 @@ export function Home({ route }) {
             origin={`Origem: ${nextTrip.origin}`}
             destiny={`Viagem para: ${nextTrip.destiny}`}
             passengers={`Passageiros: ${nextTrip.passengers}`}
-            price={`R$ ${nextTrip.price}`}
+            price={`R$ ${nextTrip.price},00`}
             status={nextTrip.status}
             dateScheduled={nextTrip.dateTime}
           />
