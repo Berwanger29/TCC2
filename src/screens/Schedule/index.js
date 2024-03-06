@@ -47,7 +47,7 @@ export function Schedule() {
     []
   );
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(minimumTime());
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [selectedTime, setSelectedTime] = useState();
   const [timePickerVisible, setTimePickerVisible] = useState(false);
@@ -72,19 +72,19 @@ export function Schedule() {
     setTimePickerVisible(false);
   }
   function handleTimeConfirm(time) {
-
-    if(time < selectedDate)
-
-    setSelectedTime(time);
+    if (time < selectedDate) setSelectedTime(time);
     hideTimePicker();
   }
 
   async function confirm(schedule) {
-    console.log(schedule);
     const newSchedule = new ConfirmationController();
     const isAddedHistoricSuccess = newSchedule.ConfirmationUploadController(
       userDataContext.uid,
-      (dateTime = `${schedule.date} @ ${schedule.time}`)
+      (dateTime = schedule.date),
+      (passengers = amountPassengersPicker),
+      (destiny = selectedRadioButton),
+      (origin = selectedRadioButton === "Manaus" ? "Novo Airão" : "Manaus"),
+      (price = 85 * amountPassengersPicker)
     );
 
     if (isAddedHistoricSuccess) {
@@ -95,17 +95,22 @@ export function Schedule() {
   function handleConfirmation() {
     const formattedDate = moment(selectedDate)
       .locale("pt-BR")
-      .format("DD/MM/YYYY");
-    const formattedTime = moment(selectedTime).locale("pt-BR").format("HH:mm");
+      .format("DD/MM/YYYY @ HH:mm");
+    // const formattedTime = moment(selectedTime).locale("pt-BR").format("HH:mm");
 
     const price = amountPassengersPicker * 85;
 
-    if (selectedTime === undefined || selectedRadioButton === "") {
+    if (selectedDate === undefined || selectedRadioButton === "") {
       Alert.alert("Preencha todos os campos!");
     } else {
       Alert.alert(
         "Confirmação",
-        `Você deseja realmente confirmar sua viagem na data ${formattedDate} às ${formattedTime} partindo de ${selectedRadioButton} com ${amountPassengersPicker} passageiros no valor de R$${price},00?`,
+        `Você deseja realmente confirmar sua viagem na data ${formattedDate.slice(
+          0,
+          10
+        )} às ${formattedDate.slice(
+          13
+        )} partindo de ${selectedRadioButton} com ${amountPassengersPicker} passageiros no valor de R$${price},00?`,
         [
           {
             text: "Modificar",
@@ -114,8 +119,7 @@ export function Schedule() {
           },
           {
             text: "Confirmar",
-            onPress: () =>
-              confirm({ date: formattedDate, time: formattedTime }),
+            onPress: () => confirm({ date: formattedDate }),
           },
         ]
       );
@@ -123,8 +127,8 @@ export function Schedule() {
   }
 
   function minimumTime() {
-    let hours = moment(selectedDate).locale("pt-br").format("HH");
-    let minutes = moment(selectedDate).locale("pt-br").format("mm");
+    let hours = moment().locale("pt-br").format("HH");
+    let minutes = moment().locale("pt-br").format("mm");
 
     if (minutes[1] !== "0") {
       let algorism = Number(minutes[1]);
@@ -133,9 +137,9 @@ export function Schedule() {
     }
 
     const time = new Date(
-      Number(moment(selectedDate).format("YYYY")),
-      Number(moment(selectedDate).format("MM") - 1),
-      Number(moment(selectedDate).format("DD")),
+      Number(moment().format("YYYY")),
+      Number(moment().format("MM") - 1),
+      Number(moment().format("DD")),
       Number(hours),
       Number(minutes)
     );
@@ -156,17 +160,18 @@ export function Schedule() {
 
       <InputsContainer>
         <InputWrapper>
-          <TextH2 text="Selecione uma data" />
+          <TextH2 text="Selecione uma data e horário" />
 
           <InvisibleButton onPress={() => showDatePicker()}>
             <Textregular
+              style={{ fontSize: 20 }}
               text={`${moment(selectedDate)
                 .locale("pt-BR")
-                .format("DD/MM/YYYY")}`}
+                .format("DD/MM/YYYY | HH:mm")}`}
             />
           </InvisibleButton>
 
-          <DateTimePickerModal
+          {/* <DateTimePickerModal
             date={selectedDate}
             isVisible={datePickerVisible}
             minimumDate={selectedDate}
@@ -174,9 +179,20 @@ export function Schedule() {
             onConfirm={handleDateConfirm}
             onCancel={hideDatePicker}
             locale="pt_BR"
+          /> */}
+
+          <DateTimePickerModal
+            date={selectedDate}
+            isVisible={datePickerVisible}
+            minimumDate={new Date()}
+            mode="datetime"
+            onConfirm={handleDateConfirm}
+            onCancel={hideDatePicker}
+            minuteInterval={10}
+            locale="pt_BR"
           />
         </InputWrapper>
-
+        {/* 
         <InputWrapper>
           <TextH2 text="Selecione um horário" />
           <InvisibleButton onPress={() => showTimePicker()}>
@@ -198,7 +214,8 @@ export function Schedule() {
             onConfirm={handleTimeConfirm}
             onCancel={hideTimePicker}
           />
-        </InputWrapper>
+        </InputWrapper> */}
+
         <InputWrapper>
           <TextH2 text="Selecione um destino" />
           <RadioGroup

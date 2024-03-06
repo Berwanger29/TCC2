@@ -35,9 +35,9 @@ export function Historic() {
               key={item.scheduleId}
               origin={`Origem: ${item.origin}`}
               // destiny={`Destino: ${item.destiny}`}
-              destiny={`Viagem para: ${item.destiny}`}
+              destiny={`${item.destiny}`}
               passengers={`Passageiros: ${item.passengers}`}
-              price={`R$ ${item.price}`}
+              price={`R$ ${item.price},00`}
               status={item.status}
               dateScheduled={item.dateTime}
             />
