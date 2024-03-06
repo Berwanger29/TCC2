@@ -7,7 +7,7 @@ import { LoadingScreen } from "../../components/LoadingScreen.js";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { UserContext } from "../../context/UserContext";
+import { UserContext, getUserDataDB } from "../../context/UserContext";
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -20,8 +20,8 @@ import { ListItem } from "../../components/ListItem/index.js";
 import { View } from "react-native";
 
 export function Home({ route }) {
-  const { userDataContext, setUserDataContext, userDB } = useContext(UserContext);
-  const { userDBContext, setUserDBContext } = useContext(UserDBContext);
+  const { userDataContext, setUserDataContext, userDB, setUserDB } =
+    useContext(UserContext);
   const { triggerUserEffect } = route.params;
   const navigation = useNavigation();
 
@@ -38,7 +38,7 @@ export function Home({ route }) {
       case hour > 6 && hour <= 12:
         greeting = ", bom dia!";
         break;
-        
+
       case hour > 12 && hour <= 18:
         greeting = ", boa tarde!";
         break;
@@ -61,23 +61,26 @@ export function Home({ route }) {
     return new Date(year, month, day);
   }
 
-  function getNextTrip(trips) {
-    const nextTrips = trips.filter((trip) => trip.status === "agendado");
+  async function getNextTrip() {
+    const trips = await userDB;
+
+    setUserName(trips.name);
+
+    const nextTrips = trips.historic.filter(
+      (trip) => trip.status === "agendado"
+    );
 
     const sortedAsc = nextTrips.sort(
       (objA, objB) =>
         getTripDate(objA.dateTime.slice(0, -8)) -
         getTripDate(objB.dateTime.slice(0, -8))
     );
-
     setNextTrip(sortedAsc[0]);
   }
 
-  useEffect(()=>{
-    // getNextTrip(userDB.historic);
-    setUserName(userDB.name)
-    console.log(userDB)
-  },[])
+  useEffect(() => {
+    getNextTrip();
+  }, []);
 
   if (userName === "") {
     return (

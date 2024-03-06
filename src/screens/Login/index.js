@@ -42,7 +42,7 @@ export function Login() {
       setHasLogin(true);
       storeLoginUserData(userData);
       setUserDataContext(userData);
-      getUserDataDB();
+      await getUserDataDB();
       Alert.alert("Sucesso", "Login efetuado com sucesso");
     } else {
       Alert.alert("Erro", "Alguma coisa deu errado");

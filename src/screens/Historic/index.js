@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { Container, List } from "./styles";
 
@@ -6,11 +6,23 @@ import { TextSmall, TextTitle } from "../../components/Texts";
 import { UserDBContext } from "../../context/UserDBContext";
 import { ListItem } from "../../components/ListItem";
 import { LoadingScreen } from "../../components/LoadingScreen.js";
+import { UserContext } from "../../context/UserContext.js";
 
 export function Historic() {
-  const { userDBContext } = useContext(UserDBContext);
+  const { userDB } = useContext(UserContext);
 
-  if (!userDBContext) {
+  const [trips, setTrips] = useState([]);
+
+  async function getTrips() {
+    const aux = await userDB;
+    setTrips(aux.historic);
+  }
+
+  useEffect(() => {
+    getTrips();
+  }, []);
+
+  if (trips.length === 0) {
     return (
       <Container>
         <LoadingScreen />
@@ -27,7 +39,7 @@ export function Historic() {
         }}
       />
       <List
-        data={userDBContext.historic}
+        data={trips}
         showsVerticalScrollIndicator={false}
         renderItem={({ index, item }) => {
           return (
