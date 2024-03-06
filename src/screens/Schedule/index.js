@@ -72,6 +72,9 @@ export function Schedule() {
     setTimePickerVisible(false);
   }
   function handleTimeConfirm(time) {
+
+    if(time < selectedDate)
+
     setSelectedTime(time);
     hideTimePicker();
   }
@@ -191,7 +194,7 @@ export function Schedule() {
             mode="time"
             is24Hour
             minuteInterval={10}
-            minimumDate={minimumTime()}
+            // minimumDate={minimumTime()}
             onConfirm={handleTimeConfirm}
             onCancel={hideTimePicker}
           />
@@ -207,6 +210,7 @@ export function Schedule() {
               alignItems: "flex-start",
               flexDirection: "row",
             }}
+            labelStyle={{ fontSize: 18 }}
           />
         </InputWrapper>
 
