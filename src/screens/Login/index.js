@@ -8,7 +8,7 @@ import { useState } from "react";
 import { DefaultButton } from "../../components/DefaultButton";
 
 import { LoginUserController } from "../../controllers/LoginUserController";
-import { UserContext } from "../../context/UserContext";
+import { UserContext, getUserDataDB } from "../../context/UserContext";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -18,7 +18,7 @@ import format from "pretty-format";
 export function Login() {
   const navigation = useNavigation();
 
-  const { setUserDataContext } = useContext(UserContext);
+  const { setUserDataContext, setHasLogin } = useContext(UserContext);
 
   const [email, setEmail] = useState("email@teste.com");
   const [password, setPassword] = useState("123123");
@@ -37,12 +37,16 @@ export function Login() {
     const newLogin = new LoginUserController();
     const { isLoginSuccessful, userData } =
       await newLogin.HandleLoginUserEmailAndPassword(email, password);
-    storeLoginUserData(userData);
-    setUserDataContext(userData);
 
-    isLoginSuccessful
-      ? Alert.alert("Sucesso", "Sua conta foi criada com sucesso")
-      : Alert.alert("Erro", "Alguma coisa deu errado");
+    if (isLoginSuccessful) {
+      setHasLogin(true);
+      storeLoginUserData(userData);
+      setUserDataContext(userData);
+      getUserDataDB();
+      Alert.alert("Sucesso", "Login efetuado com sucesso");
+    } else {
+      Alert.alert("Erro", "Alguma coisa deu errado");
+    }
   }
 
   return (

@@ -20,7 +20,7 @@ import { ListItem } from "../../components/ListItem/index.js";
 import { View } from "react-native";
 
 export function Home({ route }) {
-  const { userDataContext, setUserDataContext } = useContext(UserContext);
+  const { userDataContext, setUserDataContext, userDB } = useContext(UserContext);
   const { userDBContext, setUserDBContext } = useContext(UserDBContext);
   const { triggerUserEffect } = route.params;
   const navigation = useNavigation();
@@ -28,37 +28,6 @@ export function Home({ route }) {
   const [userName, setUserName] = useState("");
   const [trigger, setTrigger] = useState(0);
   const [nextTrip, setNextTrip] = useState();
-
-  async function getLoginUserData() {
-    try {
-      const jsonValue = await AsyncStorage.getItem("loginUserData");
-      let aux = JSON.parse(jsonValue);
-      setUserDataContext(aux);
-
-      return aux;
-    } catch (err) {
-      console.error(err);
-      return;
-    }
-  }
-
-  async function getUserDataDB() {
-    let docSnap;
-
-    const storedData = await getLoginUserData();
-
-    if (userDataContext) {
-      const docRef = doc(db, "passengers", userDataContext.uid);
-      docSnap = await getDoc(docRef);
-    } else if (storedData) {
-      const docRef = doc(db, "passengers", storedData.uid);
-      docSnap = await getDoc(docRef);
-    }
-
-    setUserName(docSnap.data().name);
-    setUserDBContext(docSnap.data());
-    getNextTrip(docSnap.data().historic);
-  }
 
   function getGreeting() {
     let greeting;
@@ -104,10 +73,11 @@ export function Home({ route }) {
     setNextTrip(sortedAsc[0]);
   }
 
-  useEffect(() => {
-    setTrigger(triggerUserEffect);
-    getUserDataDB();
-  }, [trigger]);
+  useEffect(()=>{
+    // getNextTrip(userDB.historic);
+    setUserName(userDB.name)
+    console.log(userDB)
+  },[])
 
   if (userName === "") {
     return (

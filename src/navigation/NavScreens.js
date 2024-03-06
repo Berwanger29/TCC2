@@ -19,33 +19,33 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createNativeStackNavigator();
 
 export function NavScreens() {
-  const { userDataContext, setUserDataContext } = useContext(UserContext);
-  const [hasLogin, setHasLogin] = useState(false);
+  const { userDataContext, setUserDataContext, hasLogin, setHasLogin } =
+    useContext(UserContext);
 
-  async function getLoginUserData() {
-    try {
-      const jsonValue = await AsyncStorage.getItem("loginUserData");
-      let aux = JSON.parse(jsonValue);
-      setUserDataContext(aux);
+  // async function getLoginUserData() {
+  //   try {
+  //     const jsonValue = await AsyncStorage.getItem("loginUserData");
+  //     let aux = JSON.parse(jsonValue);
+  //     setUserDataContext(aux);
 
-      //   return jsonValue != null ? aux : false;
-      return aux;
-    } catch (err) {
-      console.error(err);
-      return;
-    }
-  }
+  //     //   return jsonValue != null ? aux : false;
+  //     return aux;
+  //   } catch (err) {
+  //     console.error(err);
+  //     return;
+  //   }
+  // }
 
-  useEffect(() => {
-    // if (getLoginUserData() !== null && userDataContext !== null) {
-    //   setHasLogin(true);
-    // }
-    if (getLoginUserData() === null) {
-      setHasLogin(false);
-    } else {
-      setHasLogin(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // if (getLoginUserData() !== null && userDataContext !== null) {
+  //   //   setHasLogin(true);
+  //   // }
+  //   if (getLoginUserData() === null) {
+  //     setHasLogin(false);
+  //   } else {
+  //     setHasLogin(true);
+  //   }
+  // }, []);
 
   return (
     <Stack.Navigator
