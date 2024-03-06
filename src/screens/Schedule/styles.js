@@ -11,11 +11,12 @@ export const Container = styled(SafeAreaView)`
 
 export const InputsContainer = styled.View`
   flex: 1;
+  gap: 15px,
 `;
 
 export const InputWrapper = styled.View`
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 15px;
+
 `;
 export const InvisibleButton = styled.TouchableOpacity`
   align-items: center;
