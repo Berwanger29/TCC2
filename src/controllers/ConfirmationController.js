@@ -1,20 +1,26 @@
 import { ConfirmationModel } from "../models/ConfirmationMondel";
 
-
 export class ConfirmationController {
-    constructor() { }
+  constructor() {}
 
-    async ConfirmationUploadController(
-        uid,
-        dateTime,
-        origin = "Novo Airão",
-        destiny = "Manaus",
-        price = "85"
-    ) {
-        const newConfirmation = new ConfirmationModel(uid, dateTime, origin, destiny, price);
-        const isAddedHistoricSuccess = await newConfirmation.uploadTravel()
-        
-        
-        return isAddedHistoricSuccess;
-    }
+  async ConfirmationUploadController(
+    uid,
+    dateTime,
+    origin,
+    destiny,
+    passengers,
+    price
+  ) {
+    const newConfirmation = new ConfirmationModel(
+      uid,
+      dateTime,
+      origin,
+      destiny,
+      price,
+      passengers
+    );
+    const isAddedHistoricSuccess = await newConfirmation.uploadTravel();
+
+    return isAddedHistoricSuccess;
+  }
 }
