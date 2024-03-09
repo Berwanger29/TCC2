@@ -43,11 +43,11 @@ export default function App() {
     <>
       <StatusBar style="light" />
 
-      <UserProvider>
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <UserProvider>
           <NavContainer />
-        </ThemeProvider>
-      </UserProvider>
+        </UserProvider>
+      </ThemeProvider>
     </>
   );
 }

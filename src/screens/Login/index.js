@@ -39,10 +39,12 @@ export function Login() {
       await newLogin.HandleLoginUserEmailAndPassword(email, password);
 
     if (isLoginSuccessful) {
-      setHasLogin(true);
       storeLoginUserData(userData);
       setUserDataContext(userData);
-      await getUserDataDB();
+      const userLogin = await getUserDataDB();
+
+      if (userLogin) setHasLogin(true);
+
       Alert.alert("Sucesso", "Login efetuado com sucesso");
     } else {
       Alert.alert("Erro", "Alguma coisa deu errado");
