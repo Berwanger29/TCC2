@@ -7,7 +7,7 @@ import { LoadingScreen } from "../../components/LoadingScreen.js";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { UserContext } from "../../context/UserContext";
+import { UserContext, getUserDataDB } from "../../context/UserContext";
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -20,45 +20,14 @@ import { ListItem } from "../../components/ListItem/index.js";
 import { View } from "react-native";
 
 export function Home({ route }) {
-  const { userDataContext, setUserDataContext } = useContext(UserContext);
-  const { userDBContext, setUserDBContext } = useContext(UserDBContext);
+  const { userDataContext, setUserDataContext, userDB, setUserDB } =
+    useContext(UserContext);
   const { triggerUserEffect } = route.params;
   const navigation = useNavigation();
 
   const [userName, setUserName] = useState("");
   const [trigger, setTrigger] = useState(0);
   const [nextTrip, setNextTrip] = useState();
-
-  async function getLoginUserData() {
-    try {
-      const jsonValue = await AsyncStorage.getItem("loginUserData");
-      let aux = JSON.parse(jsonValue);
-      setUserDataContext(aux);
-
-      return aux;
-    } catch (err) {
-      console.error(err);
-      return;
-    }
-  }
-
-  async function getUserDataDB() {
-    let docSnap;
-
-    const storedData = await getLoginUserData();
-
-    if (userDataContext) {
-      const docRef = doc(db, "passengers", userDataContext.uid);
-      docSnap = await getDoc(docRef);
-    } else if (storedData) {
-      const docRef = doc(db, "passengers", storedData.uid);
-      docSnap = await getDoc(docRef);
-    }
-
-    setUserName(docSnap.data().name);
-    setUserDBContext(docSnap.data());
-    getNextTrip(docSnap.data().historic);
-  }
 
   function getGreeting() {
     let greeting;
@@ -69,7 +38,7 @@ export function Home({ route }) {
       case hour > 6 && hour <= 12:
         greeting = ", bom dia!";
         break;
-        
+
       case hour > 12 && hour <= 18:
         greeting = ", boa tarde!";
         break;
@@ -92,22 +61,26 @@ export function Home({ route }) {
     return new Date(year, month, day);
   }
 
-  function getNextTrip(trips) {
-    const nextTrips = trips.filter((trip) => trip.status === "agendado");
+  async function getNextTrip() {
+    const trips = await userDB;
+
+    setUserName(trips.name);
+
+    const nextTrips = trips.historic.filter(
+      (trip) => trip.status === "agendado"
+    );
 
     const sortedAsc = nextTrips.sort(
       (objA, objB) =>
         getTripDate(objA.dateTime.slice(0, -8)) -
         getTripDate(objB.dateTime.slice(0, -8))
     );
-
     setNextTrip(sortedAsc[0]);
   }
 
   useEffect(() => {
-    setTrigger(triggerUserEffect);
-    getUserDataDB();
-  }, [trigger]);
+    getNextTrip();
+  }, []);
 
   if (userName === "") {
     return (

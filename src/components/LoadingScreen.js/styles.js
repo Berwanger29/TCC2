@@ -4,7 +4,7 @@ import theme from "../../globals/styles/theme";
 
 export const Container = styled.View`
     flex: 1;
-    background-color: rgba(0, 0, 0, 0.36);
+    background-color: ${({theme})=>theme.colors.blue};
     align-items: center;
     justify-content: center;
     position: absolute;
