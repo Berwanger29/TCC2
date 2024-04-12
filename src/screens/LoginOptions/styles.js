@@ -24,6 +24,7 @@ export const Logo = styled.Image.attrs({
 
 export const LoginShortButtonsWrapper = styled.View`
     width: 100%;
+    flex: 1;
     flex-direction: row;
     margin-bottom: 40px;
     align-items: center;

@@ -64,6 +64,10 @@ export function Home({ route }) {
   async function getNextTrip() {
     const trips = await userDB;
 
+    if (userDB === false) {
+      
+    }
+
     setUserName(trips.name);
 
     const nextTrips = trips.historic.filter(
@@ -80,9 +84,18 @@ export function Home({ route }) {
 
   useEffect(() => {
     getNextTrip();
+    console.log(userDB)
   }, []);
 
-  if (userName === "") {
+  // if (userName === "") {
+  //   return (
+  //     <Container>
+  //       <LoadingScreen />
+  //     </Container>
+  //   );
+  // }
+
+  if (userDB === false) {
     return (
       <Container>
         <LoadingScreen />

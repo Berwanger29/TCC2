@@ -71,9 +71,9 @@ export function LoginOptions() {
                     >
                         <AntDesign name="apple1" size={RFValue(30)} color={theme.colors.white} />
                     </LoginButton> */}
-                    <LoginButton>
+                    {/* <LoginButton>
                         <AntDesign name="google" size={RFValue(30)} color={theme.colors.white} />
-                    </LoginButton>
+                    </LoginButton> */}
                 </LoginShortButtonsWrapper>
 
                 <EmailTextWrapper>
